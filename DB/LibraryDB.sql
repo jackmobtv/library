@@ -1,21 +1,15 @@
-PRINT '' PRINT '*** Dropping Database library if found'
+PRINT '' PRINT '*** dropping database library if found'
+GO
+DROP DATABASE IF EXISTS [library]
 GO
 
-IF EXISTS (SELECT 1 FROM master.dbo.sysdatabases WHERE [name] = 'library')
-BEGIN
-	DROP DATABASE [library]
-END
+PRINT '' PRINT '*** creating library database'
 GO
-
-PRINT '' PRINT '*** creating db library'
-GO
-
 CREATE DATABASE [library]
 GO
 
 PRINT '' PRINT '*** using database library'
 GO
-
 USE [library]
 GO
 
@@ -42,7 +36,7 @@ CREATE TABLE [dbo].[Book] (
       [BookID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
     , [GenreID] [INT] NOT NULL
     , [PublisherID] [INT] NOT NULL
-    , [Name] [NVARCHAR](100)
+    , [Name] [NVARCHAR](255)
 
     , CONSTRAINT [fk_Book_GenreID] FOREIGN KEY ([GenreID]) REFERENCES [Genre] ([GenreID])
     , CONSTRAINT [fk_Book_PublisherID] FOREIGN KEY ([PublisherID]) REFERENCES [Publisher] ([PublisherID])
@@ -136,4 +130,138 @@ CREATE TABLE [dbo].[CopyTransaction] (
     , CONSTRAINT [fk_CopyTransaction_CopyID] FOREIGN KEY ([CopyID]) REFERENCES [Copy] ([CopyID])
     , CONSTRAINT [pk_TransactionID_CopyID] PRIMARY KEY ([TransactionID], [CopyID])
 )
+GO
+
+
+PRINT '' PRINT '*** Populating Publisher Table'
+GO
+INSERT INTO [dbo].[Publisher]
+	([Name])
+VALUES
+	  ('Publisher1')
+    , ('Publisher2')
+    , ('Publisher3')
+GO
+
+PRINT '' PRINT '*** Populating Genre Table'
+GO
+INSERT INTO [dbo].[Genre]
+	([Name], [Description])
+VALUES
+	  ('Horror', 'Spooky Scary Stories')
+    , ('Comedy', 'Funny Books')
+    , ('Non-Fiction', 'Real Stories')
+GO
+
+PRINT '' PRINT '*** Populating Book Table'
+GO
+INSERT INTO [dbo].[Book]
+	([GenreID], [PublisherID], [Name])
+VALUES
+	  (1000001, 1000001, 'Birds and Me')
+    , (1000002, 1000002, 'Monty Python''s Big Red Book')
+    , (1000000, 1000000, 'Eat Yourself Smart')
+    , (1000002, 1000000, 'Faster Than The Speed Of Love')
+    , (1000001, 1000002, 'Around The World In 80 Buffets')
+    , (1000000, 1000001, 'My Horrible Father')
+    , (1000002, 1000001, 'The Big Goodbye')
+GO
+
+PRINT '' PRINT '*** Populating Author Table'
+GO
+INSERT INTO [dbo].[Author]
+	([Name])
+VALUES
+	  ('Peter Ian Staker')
+    , ('Revolver Ocelot')
+    , (N'Tracy Tormé')
+GO
+
+PRINT '' PRINT '*** Populating BookAuthor Table'
+GO
+INSERT INTO [dbo].[BookAuthor]
+	([BookID], [AuthorID])
+VALUES
+	  (1000000, 1000000)
+    , (1000001, 1000001)
+    , (1000002, 1000002)
+    , (1000003, 1000001)
+    , (1000004, 1000002)
+    , (1000005, 1000000)
+    , (1000006, 1000002)
+GO
+
+PRINT '' PRINT '*** Populating User Table'
+GO
+INSERT INTO [dbo].[User]
+	([FirstName], [LastName], [Email])
+VALUES
+	  ('Ad', 'Min', 'admin@company.com')
+    , ('Big', 'Boss', 'nkdsnk123@aol.com')
+    , ('Kil', 'Yu', 'fakeemail@fakedomain.net')
+    , ('Book', 'Eater', 'iluveatingbooks@yahoo.com')
+GO
+
+UPDATE [User]
+SET [Active] = 0
+WHERE [UserID] = 1000003
+GO
+
+PRINT '' PRINT '*** Populating Role Table'
+GO
+INSERT INTO [dbo].[Role]
+	([Name], [Description])
+VALUES
+	  ('Admin', 'System Admin')
+    , ('Librarian', 'Librarian')
+    , ('User', 'Users of the System')
+GO
+
+PRINT '' PRINT '*** Populating UserRole Table'
+GO
+INSERT INTO [dbo].[UserRole]
+	([UserID], [RoleID])
+VALUES
+	  (1000000, 1000000)
+    , (1000001, 1000001)
+    , (1000002, 1000002)
+    , (1000003, 1000002)
+GO
+
+PRINT '' PRINT '*** Populating Transaction Table'
+GO
+INSERT INTO [dbo].[Transaction]
+	([UserID], [TransactionType])
+VALUES
+	  (1000002, 'Check Out')
+    , (1000002, 'Check In')
+    , (1000003, 'Check Out')
+    , (1000003, 'Check Out')
+GO
+
+PRINT '' PRINT '*** Populating Copy Table'
+GO
+INSERT INTO [dbo].[Copy]
+	([BookID], [Condition], [Active])
+VALUES
+	  (1000000, 'Good', 1)
+    , (1000000, 'Spine Damage', 1)
+    , (1000000, 'Excellent', 0)
+    , (1000001, 'Missing Pages', 0)
+    , (1000002, 'Torn Cover', 1)
+    , (1000003, 'Good', 1)
+    , (1000005, 'Some Torn Pages', 1)
+    , (1000005, 'Poor', 1)
+    , (1000006, 'Good', 1)
+GO
+
+PRINT '' PRINT '*** Populating CopyTransaction Table'
+GO
+INSERT INTO [dbo].[CopyTransaction]
+	([TransactionID], [CopyID])
+VALUES
+	  (1000000, 1000001)
+    , (1000001, 1000001)
+    , (1000002, 1000002)
+    , (1000003, 1000003)
 GO

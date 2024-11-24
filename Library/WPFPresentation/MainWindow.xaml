@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFPresentation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="Library" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
 
+        <Menu Grid.Row="0" Padding="5 0 0 0" VerticalAlignment="Center">
+            <MenuItem x:Name="mnuFile" Header="File">
+                <MenuItem x:Name="mnuLoginLogout" Header="Login"/>
+                <MenuItem x:Name="mnuCreateAccount" Header="Create Account"/>
+                <MenuItem x:Name="mnuExit" Header="Exit" Click="mnuExit_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <TabControl x:Name="tabsetMain" Grid.Row="1" FontSize="14">
+            <TabItem x:Name="tabBookList" Header="Book List">
+                <Label Content="This is the Book List Tab"/>
+            </TabItem>
+            <TabItem x:Name="tabCheckoutList" Header="Checkout List">
+                <Label Content="This is the Checkout List Tab"/>
+            </TabItem>
+            <TabItem x:Name="tabCheckedOut" Header="Checked Out">
+                <Label Content="This is the Checked Out Tab"/>
+            </TabItem>
+            <TabItem x:Name="tabMemberList" Header="Member List">
+                <Label Content="This is the Member List Tab"/>
+            </TabItem>
+        </TabControl>
+
+        <StatusBar Grid.Row="2" Padding="5 0 0 0" FontStyle="Italic">
+            <StatusBarItem Content="Welcome to the Library. Please Log In At The File Menu"/>
+        </StatusBar>
     </Grid>
 </Window>

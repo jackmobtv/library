@@ -20,5 +20,10 @@ namespace WPFPresentation
         {
             InitializeComponent();
         }
+
+        private void mnuExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
