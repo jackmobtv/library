@@ -19,5 +19,10 @@ namespace DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public UserVM selectUserByEmailAndPasswordHash(string email, string passwordHash)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

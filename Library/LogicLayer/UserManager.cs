@@ -59,9 +59,9 @@ namespace LogicLayer
             {
                 userVM = _userAccessor.selectUserByEmail(email);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                throw new ArgumentException("Employee Not Found", ex);
+                throw new ArgumentException("User Not Found", ex);
             }
 
             return userVM;
@@ -70,6 +70,42 @@ namespace LogicLayer
         public List<string> getRolesByUserId(int userId)
         {
             return _userAccessor.selectRolesByUserId(userId);
+        }
+
+        public bool authenticateUser(string email, string password)
+        {
+            try
+            {
+                bool result = false;
+                string passwordhash = HashSha256(password);
+                _userAccessor.selectUserByEmailAndPasswordHash(email, passwordhash);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException("User Not Found", ex);
+            }
+
+            return true;
+        }
+
+        public UserVM loginUser(string email, string password)
+        {
+            UserVM user = null;
+
+            try
+            {
+                if (authenticateUser(email, password))
+                {
+                    user = _userAccessor.selectUserByEmail(email);
+                    user.Roles = _userAccessor.selectRolesByUserId(user.UserId);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException("Bad Username or Password", ex);
+            }
+
+            return user;
         }
     }
 }

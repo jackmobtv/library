@@ -10,7 +10,7 @@ namespace DataAccessInterfaces
     public interface IUserAccessor
     {
         public UserVM selectUserByEmail(string email);
-
         public List<string> selectRolesByUserId(int userId);
+        public UserVM selectUserByEmailAndPasswordHash(string email, string passwordHash);
     }
 }

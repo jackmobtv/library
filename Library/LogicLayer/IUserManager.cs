@@ -11,5 +11,7 @@ namespace LogicLayer
     {
         public UserVM getUserByEmail(string email);
         public List<string> getRolesByUserId(int userId);
+        public bool authenticateUser(string email, string password);
+        public UserVM loginUser(string email, string password);
     }
 }

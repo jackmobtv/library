@@ -11,7 +11,7 @@ namespace DataAccessFakes
     public class UserAccessorFakes : IUserAccessor
     {
         private List<UserVM> _users;
-
+        private List<string> _passwordhashes;
         public UserAccessorFakes()
         {
             _users = new List<UserVM>();
@@ -61,6 +61,13 @@ namespace DataAccessFakes
                 Active = false,
                 Roles = new List<string> {  }
             });
+
+            _passwordhashes = new List<string>();
+            _passwordhashes.Add("9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e");
+            _passwordhashes.Add("9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e");
+            _passwordhashes.Add("9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e");
+            _passwordhashes.Add("9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e");
+            _passwordhashes.Add("9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e");
         }
 
         public List<string> selectRolesByUserId(int userId)
@@ -93,6 +100,23 @@ namespace DataAccessFakes
                 }
             }
             throw new ArgumentException("User Not Found");
+        }
+
+        public UserVM selectUserByEmailAndPasswordHash(string email, string passwordHash)
+        {
+            UserVM user = null;
+            for(int i = 0; i < _users.Count; i++)
+            {
+                if (_users[i].Email == email && _passwordhashes[i] == passwordHash && _users[i].Active)
+                {
+                    user = _users[i];
+                }
+            }
+            if (user == null)
+            {
+                throw new ArgumentException("User Not Found");
+            }
+            return user;
         }
     }
 }
