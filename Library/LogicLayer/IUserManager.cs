@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataDomain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace LogicLayer
 {
     public interface IUserManager
     {
+        public UserVM getUserByEmail(string email);
+        public List<string> getRolesByUserId(int userId);
     }
 }
