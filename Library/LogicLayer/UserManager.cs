@@ -57,7 +57,7 @@ namespace LogicLayer
 
             try
             {
-                userVM = _userAccessor.selectUserByEmail(email);
+                userVM = _userAccessor.getUserByEmail(email);
             }
             catch (ArgumentException ex)
             {
@@ -69,7 +69,7 @@ namespace LogicLayer
 
         public List<string> getRolesByUserId(int userId)
         {
-            return _userAccessor.selectRolesByUserId(userId);
+            return _userAccessor.getRolesByUserId(userId);
         }
 
         public bool authenticateUser(string email, string password)
@@ -78,7 +78,7 @@ namespace LogicLayer
             {
                 bool result = false;
                 string passwordhash = HashSha256(password);
-                _userAccessor.selectUserByEmailAndPasswordHash(email, passwordhash);
+                _userAccessor.getUserByEmailAndPasswordHash(email, passwordhash);
             }
             catch (ArgumentException ex)
             {
@@ -96,8 +96,8 @@ namespace LogicLayer
             {
                 if (authenticateUser(email, password))
                 {
-                    user = _userAccessor.selectUserByEmail(email);
-                    user.Roles = _userAccessor.selectRolesByUserId(user.UserId);
+                    user = _userAccessor.getUserByEmail(email);
+                    user.Roles = _userAccessor.getRolesByUserId(user.UserId);
                 }
             }
             catch (ArgumentException ex)
@@ -106,6 +106,69 @@ namespace LogicLayer
             }
 
             return user;
+        }
+
+        public void editUser(string firstName, string lastName, string old_email, string new_email, string old_password, string new_password)
+        {
+            bool success = false;
+
+            string old_passwordHash = HashSha256(old_password);
+            string new_passwordHash = HashSha256(new_password);
+
+            try
+            {
+                if(old_email != new_email)
+                {
+                    try
+                    {
+                        _userAccessor.getUserByEmail(new_email);
+                    }
+                    catch (ArgumentException)
+                    {
+                        _userAccessor.editUser(firstName, lastName, old_email, new_email, old_passwordHash, new_passwordHash);
+                        success = true;
+                    }
+                    if (!success)
+                    {
+                        throw new ArgumentException("Email is Already in Use");
+                    }
+                }
+                else
+                {
+                    _userAccessor.editUser(firstName, lastName, old_email, new_email, old_passwordHash, new_passwordHash);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void addUser(string firstName, string lastName, string email, string password)
+        {
+            bool success = false;
+
+            try
+            {
+                try
+                {
+                    _userAccessor.getUserByEmail(email);
+                }
+                catch (ArgumentException)
+                {
+                    string passwordHash = HashSha256(password);
+                    _userAccessor.addUser(firstName, lastName, email, passwordHash);
+                    success = true;
+                }
+                if (!success)
+                {
+                    throw new ArgumentException("Email is Already in Use");
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -265,3 +265,123 @@ VALUES
     , (1000002, 1000002)
     , (1000003, 1000003)
 GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_roles_by_user_id'
+GO
+CREATE PROCEDURE [dbo].[sp_select_roles_by_user_id]
+	(
+		@UserId [INT]
+	)
+AS
+	BEGIN
+
+		SELECT
+			[Role].[Name]
+		FROM [UserRole]
+		JOIN [Role]
+		ON [UserRole].[RoleID] = [Role].[RoleID]
+		WHERE [UserRole].[UserID] = @UserID
+
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_user_by_email'
+GO
+CREATE PROCEDURE [dbo].[sp_select_user_by_email]
+	(
+		@Email [NVARCHAR] (255)
+	)
+AS
+	BEGIN
+
+		SELECT
+			  [UserID]
+			, [FirstName]
+			, [LastName]
+			, [Email]
+			, [Active]
+		FROM [dbo].[User]
+		WHERE
+			[Email] = @Email
+				AND
+			[Active] = 1
+
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_user_by_email_and_password'
+GO
+CREATE PROCEDURE [dbo].[sp_select_user_by_email_and_password]
+	(
+		  @Email [NVARCHAR] (255)
+		, @PasswordHash [CHAR] (64)
+	)
+AS
+	BEGIN
+
+		SELECT
+			  [UserID]
+			, [FirstName]
+			, [LastName]
+			, [Email]
+			, [Active]
+		FROM [dbo].[User]
+		WHERE
+			[Email] = @Email
+				AND
+			[PasswordHash] = @PasswordHash
+				AND
+			[Active] = 1
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_insert_user'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_user]
+(
+      @FirstName [NVARCHAR] (255)
+    , @LastName [NVARCHAR] (255)
+    , @Email [NVARCHAR] (255)
+    , @PasswordHash [CHAR] (64)
+)
+AS
+    BEGIN TRANSACTION
+
+        INSERT INTO [dbo].[User]
+            (FirstName, LastName, Email, PasswordHash)
+        VALUES
+            (@FirstName, @LastName, @Email, @PasswordHash)
+
+        INSERT INTO [dbo].[UserRole]
+            (UserID, RoleID)
+        VALUES
+            (@@IDENTITY, 1000000)
+
+    COMMIT TRANSACTION
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_insert_user'
+GO
+CREATE PROCEDURE [dbo].[sp_update_user]
+(
+      @FirstName [NVARCHAR] (255)
+    , @LastName [NVARCHAR] (255)
+    , @Old_Email [NVARCHAR] (255)
+    , @Email [NVARCHAR] (255)
+    , @PasswordHash [CHAR] (64)
+)
+AS
+    BEGIN TRANSACTION
+
+        UPDATE [dbo].[User]
+        SET
+              [FirstName] = @FirstName
+            , [LastName] = @LastName
+            , [Email] = @Email
+            , [PasswordHash] = @PasswordHash
+        WHERE [Email] = @Old_Email
+
+    COMMIT TRANSACTION
+
+    RETURN @@ROWCOUNT
+GO

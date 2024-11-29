@@ -70,7 +70,36 @@ namespace DataAccessFakes
             _passwordhashes.Add("9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e");
         }
 
-        public List<string> selectRolesByUserId(int userId)
+        public void addUser(string firstName, string lastName, string email, string passwordHash)
+        {
+            _users.Add(new UserVM()
+            {
+                UserId = 100005,
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                Active = true,
+                Roles = new List<string> { "User" }
+            });
+
+            _passwordhashes.Add(passwordHash);
+        }
+
+        public void editUser(string firstName, string lastName, string old_email, string new_email, string old_passwordHash, string new_passwordHash)
+        {
+            for (int i = 0; i < _users.Count; i++)
+            {
+                if (_users[i].Email == old_email || _passwordhashes[i] == old_passwordHash)
+                {
+                    _users[i].FirstName = firstName;
+                    _users[i].LastName = lastName;
+                    _users[i].Email = new_email;
+                    _passwordhashes[i] = new_passwordHash;
+                }
+            }
+        }
+
+        public List<string> getRolesByUserId(int userId)
         {
             List<string> roles = null;
 
@@ -90,7 +119,7 @@ namespace DataAccessFakes
             return roles;
         }
 
-        public UserVM selectUserByEmail(string email)
+        public UserVM getUserByEmail(string email)
         {
             foreach (var user in _users)
             {
@@ -102,7 +131,7 @@ namespace DataAccessFakes
             throw new ArgumentException("User Not Found");
         }
 
-        public UserVM selectUserByEmailAndPasswordHash(string email, string passwordHash)
+        public UserVM getUserByEmailAndPasswordHash(string email, string passwordHash)
         {
             UserVM user = null;
             for(int i = 0; i < _users.Count; i++)

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFPresentation"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Library" Height="450" Width="800">
+        Title="Library" Height="600" Width="950" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -16,8 +16,8 @@
 
         <Menu Grid.Row="0" Padding="5 0 0 0" VerticalAlignment="Center">
             <MenuItem x:Name="mnuFile" Header="File">
-                <MenuItem x:Name="mnuLoginLogout" Header="Login"/>
-                <MenuItem x:Name="mnuCreateAccount" Header="Create Account"/>
+                <MenuItem x:Name="mnuLoginLogout" Header="Login" Click="mnuLoginLogout_Click"/>
+                <MenuItem x:Name="mnuCreateAccount" Header="Create Account" Click="mnuCreateAccount_Click"/>
                 <MenuItem x:Name="mnuExit" Header="Exit" Click="mnuExit_Click"/>
             </MenuItem>
         </Menu>
@@ -35,10 +35,13 @@
             <TabItem x:Name="tabMemberList" Header="Member List">
                 <Label Content="This is the Member List Tab"/>
             </TabItem>
+            <TabItem x:Name="tabAdmin" Header="Admin">
+                <Label Content="This is the Admin Tab"/>
+            </TabItem>
         </TabControl>
 
         <StatusBar Grid.Row="2" Padding="5 0 0 0" FontStyle="Italic">
-            <StatusBarItem Content="Welcome to the Library. Please Log In At The File Menu"/>
+            <StatusBarItem Content="Welcome to the Library. Please Log In At The File Menu." x:Name="txtStatus"/>
         </StatusBar>
     </Grid>
 </Window>
