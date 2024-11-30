@@ -19,6 +19,7 @@ namespace WPFPresentation
     public partial class MainWindow : Window
     {
         private UserVM _accesskey = null;
+        private BookManager _bookManager = new BookManager();
         public MainWindow()
         {
             InitializeComponent();
@@ -101,6 +102,7 @@ namespace WPFPresentation
             tabCheckedOut.Visibility = Visibility.Hidden;
             tabCheckoutList.Visibility = Visibility.Hidden;
             tabMemberList.Visibility = Visibility.Hidden;
+            tabAdmin.Visibility = Visibility.Hidden;
         }
 
         private void logoutUser()
@@ -111,6 +113,37 @@ namespace WPFPresentation
             txtStatus.Content = "Welcome to the Library. Please Log In At The File Menu.";
 
             hideAllTabs();
+        }
+
+        private void tabBookList_Loaded(object sender, RoutedEventArgs e)
+        {
+            fillBookList();
+        }
+
+        private void grdBookList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void fillBookList()
+        {
+            List<Book> books;
+            try
+            {
+                books = _bookManager.getAllBooks();
+                if (books == null || books.Count == 0)
+                {
+                    throw new Exception("Book List is Empty.");
+                }
+                else
+                {
+                    grdBookList.ItemsSource = books;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

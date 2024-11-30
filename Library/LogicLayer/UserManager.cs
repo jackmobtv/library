@@ -24,7 +24,7 @@ namespace LogicLayer
             _userAccessor = userAccessor;
         }
 
-        public string HashSha256(string password)
+        private string HashSha256(string password)
         {
             if (password == null || password == "")
             {
@@ -57,7 +57,7 @@ namespace LogicLayer
 
             try
             {
-                userVM = _userAccessor.getUserByEmail(email);
+                userVM = _userAccessor.selectUserByEmail(email);
             }
             catch (ArgumentException ex)
             {
@@ -69,7 +69,7 @@ namespace LogicLayer
 
         public List<string> getRolesByUserId(int userId)
         {
-            return _userAccessor.getRolesByUserId(userId);
+            return _userAccessor.selectRolesByUserId(userId);
         }
 
         public bool authenticateUser(string email, string password)
@@ -78,7 +78,7 @@ namespace LogicLayer
             {
                 bool result = false;
                 string passwordhash = HashSha256(password);
-                _userAccessor.getUserByEmailAndPasswordHash(email, passwordhash);
+                _userAccessor.selectUserByEmailAndPasswordHash(email, passwordhash);
             }
             catch (ArgumentException ex)
             {
@@ -96,8 +96,8 @@ namespace LogicLayer
             {
                 if (authenticateUser(email, password))
                 {
-                    user = _userAccessor.getUserByEmail(email);
-                    user.Roles = _userAccessor.getRolesByUserId(user.UserId);
+                    user = _userAccessor.selectUserByEmail(email);
+                    user.Roles = _userAccessor.selectRolesByUserId(user.UserId);
                 }
             }
             catch (ArgumentException ex)
@@ -121,11 +121,11 @@ namespace LogicLayer
                 {
                     try
                     {
-                        _userAccessor.getUserByEmail(new_email);
+                        _userAccessor.selectUserByEmail(new_email);
                     }
                     catch (ArgumentException)
                     {
-                        _userAccessor.editUser(firstName, lastName, old_email, new_email, old_passwordHash, new_passwordHash);
+                        _userAccessor.updateUser(firstName, lastName, old_email, new_email, old_passwordHash, new_passwordHash);
                         success = true;
                     }
                     if (!success)
@@ -135,7 +135,7 @@ namespace LogicLayer
                 }
                 else
                 {
-                    _userAccessor.editUser(firstName, lastName, old_email, new_email, old_passwordHash, new_passwordHash);
+                    _userAccessor.updateUser(firstName, lastName, old_email, new_email, old_passwordHash, new_passwordHash);
                 }
             }
             catch (Exception ex)
@@ -152,12 +152,12 @@ namespace LogicLayer
             {
                 try
                 {
-                    _userAccessor.getUserByEmail(email);
+                    _userAccessor.selectUserByEmail(email);
                 }
                 catch (ArgumentException)
                 {
                     string passwordHash = HashSha256(password);
-                    _userAccessor.addUser(firstName, lastName, email, passwordHash);
+                    _userAccessor.insertUser(firstName, lastName, email, passwordHash);
                     success = true;
                 }
                 if (!success)

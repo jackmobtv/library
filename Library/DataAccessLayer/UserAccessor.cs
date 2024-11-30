@@ -12,7 +12,7 @@ namespace DataAccessLayer
 {
     public class UserAccessor : IUserAccessor
     {
-        public void addUser(string firstName, string lastName, string email, string passwordHash)
+        public void insertUser(string firstName, string lastName, string email, string passwordHash)
         {
             var conn = DBConnection.GetConnection();
 
@@ -44,7 +44,7 @@ namespace DataAccessLayer
             }
         }
 
-        public void editUser(string firstName, string lastName, string old_email, string new_email, string old_passwordHash, string new_passwordHash)
+        public void updateUser(string firstName, string lastName, string old_email, string new_email, string old_passwordHash, string new_passwordHash)
         {
             int result = 0;
 
@@ -85,7 +85,7 @@ namespace DataAccessLayer
             }
         }
 
-        public List<string> getRolesByUserId(int userId)
+        public List<string> selectRolesByUserId(int userId)
         {
             List<string> roles = new List<string>();
 
@@ -118,7 +118,7 @@ namespace DataAccessLayer
             return roles;
         }
 
-        public UserVM getUserByEmail(string email)
+        public UserVM selectUserByEmail(string email)
         {
             UserVM user = null;
 
@@ -163,7 +163,7 @@ namespace DataAccessLayer
             return user;
         }
 
-        public UserVM getUserByEmailAndPasswordHash(string email, string passwordHash)
+        public UserVM selectUserByEmailAndPasswordHash(string email, string passwordHash)
         {
             UserVM user = null;
 

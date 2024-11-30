@@ -37,6 +37,7 @@ CREATE TABLE [dbo].[Book] (
     , [GenreID] [INT] NOT NULL
     , [PublisherID] [INT] NOT NULL
     , [Name] [NVARCHAR](255)
+    , [Description] [NVARCHAR](255)
 
     , CONSTRAINT [fk_Book_GenreID] FOREIGN KEY ([GenreID]) REFERENCES [Genre] ([GenreID])
     , CONSTRAINT [fk_Book_PublisherID] FOREIGN KEY ([PublisherID]) REFERENCES [Publisher] ([PublisherID])
@@ -156,15 +157,15 @@ GO
 PRINT '' PRINT '*** Populating Book Table'
 GO
 INSERT INTO [dbo].[Book]
-	([GenreID], [PublisherID], [Name])
+	([GenreID], [PublisherID], [Name], [Description])
 VALUES
-	  (1000001, 1000001, 'Birds and Me')
-    , (1000002, 1000002, 'Monty Python''s Big Red Book')
-    , (1000000, 1000000, 'Eat Yourself Smart')
-    , (1000002, 1000000, 'Faster Than The Speed Of Love')
-    , (1000001, 1000002, 'Around The World In 80 Buffets')
-    , (1000000, 1000001, 'My Horrible Father')
-    , (1000002, 1000001, 'The Big Goodbye')
+	  (1000001, 1000001, 'Birds and Me', 'Learn about birds')
+    , (1000002, 1000002, 'Monty Python''s Big Red Book', 'Tis But A Scratch')
+    , (1000000, 1000000, 'Eat Yourself Smart', 'Get Smarter By Eating')
+    , (1000002, 1000000, 'Faster Than The Speed Of Love', 'Once you start, you can never stop reading')
+    , (1000001, 1000002, 'Around The World In 80 Buffets', 'I am the Bane of the All You Can Eat Buffet')
+    , (1000000, 1000001, 'My Horrible Father', 'My father is so horrible')
+    , (1000002, 1000001, 'The Big Goodbye', 'GOODBYE')
 GO
 
 PRINT '' PRINT '*** Populating Author Table'
@@ -384,4 +385,31 @@ AS
     COMMIT TRANSACTION
 
     RETURN @@ROWCOUNT
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_all_books'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_books]
+AS
+    BEGIN
+
+        SELECT
+              [Book].[BookID]
+            , [Book].[Name]
+            , [Book].[Description]
+            , [Genre].[Name]
+            , [Author].[Name]
+            , [Publisher].[Name]
+        FROM [Book]
+        JOIN [dbo].[Genre]
+            ON [Book].[GenreID] = [Genre].[GenreID]
+        JOIN [dbo].[Publisher]
+            ON [Book].[PublisherID] = [Publisher].[PublisherID]
+        JOIN [dbo].[BookAuthor]
+            ON [Book].[BookID] = [BookAuthor].[BookID]
+        JOIN [dbo].[Author]
+            ON [BookAuthor].[AuthorID] = [Author].[AuthorID]
+        ORDER BY [Book].[Name]
+
+    END
 GO

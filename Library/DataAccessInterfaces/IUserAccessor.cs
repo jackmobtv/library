@@ -9,10 +9,10 @@ namespace DataAccessInterfaces
 {
     public interface IUserAccessor
     {
-        public UserVM getUserByEmail(string email);
-        public List<string> getRolesByUserId(int userId);
-        public UserVM getUserByEmailAndPasswordHash(string email, string passwordHash);
-        public void editUser(string firstName, string lastName, string old_email, string new_email, string old_passwordHash, string new_passwordHash);
-        public void addUser(string firstName, string lastName, string email, string passwordHash);
+        public UserVM selectUserByEmail(string email);
+        public List<string> selectRolesByUserId(int userId);
+        public UserVM selectUserByEmailAndPasswordHash(string email, string passwordHash);
+        public void updateUser(string firstName, string lastName, string old_email, string new_email, string old_passwordHash, string new_passwordHash);
+        public void insertUser(string firstName, string lastName, string email, string passwordHash);
     }
 }

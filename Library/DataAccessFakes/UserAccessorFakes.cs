@@ -70,7 +70,7 @@ namespace DataAccessFakes
             _passwordhashes.Add("9c9064c59f1ffa2e174ee754d2979be80dd30db552ec03e7e327e9b1a4bd594e");
         }
 
-        public void addUser(string firstName, string lastName, string email, string passwordHash)
+        public void insertUser(string firstName, string lastName, string email, string passwordHash)
         {
             _users.Add(new UserVM()
             {
@@ -85,7 +85,7 @@ namespace DataAccessFakes
             _passwordhashes.Add(passwordHash);
         }
 
-        public void editUser(string firstName, string lastName, string old_email, string new_email, string old_passwordHash, string new_passwordHash)
+        public void updateUser(string firstName, string lastName, string old_email, string new_email, string old_passwordHash, string new_passwordHash)
         {
             for (int i = 0; i < _users.Count; i++)
             {
@@ -99,7 +99,7 @@ namespace DataAccessFakes
             }
         }
 
-        public List<string> getRolesByUserId(int userId)
+        public List<string> selectRolesByUserId(int userId)
         {
             List<string> roles = null;
 
@@ -119,7 +119,7 @@ namespace DataAccessFakes
             return roles;
         }
 
-        public UserVM getUserByEmail(string email)
+        public UserVM selectUserByEmail(string email)
         {
             foreach (var user in _users)
             {
@@ -131,7 +131,7 @@ namespace DataAccessFakes
             throw new ArgumentException("User Not Found");
         }
 
-        public UserVM getUserByEmailAndPasswordHash(string email, string passwordHash)
+        public UserVM selectUserByEmailAndPasswordHash(string email, string passwordHash)
         {
             UserVM user = null;
             for(int i = 0; i < _users.Count; i++)

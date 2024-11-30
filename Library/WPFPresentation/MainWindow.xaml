@@ -21,10 +21,15 @@
                 <MenuItem x:Name="mnuExit" Header="Exit" Click="mnuExit_Click"/>
             </MenuItem>
         </Menu>
-
         <TabControl x:Name="tabsetMain" Grid.Row="1" FontSize="14">
-            <TabItem x:Name="tabBookList" Header="Book List">
-                <Label Content="This is the Book List Tab"/>
+            <TabItem x:Name="tabBookList" Header="Book List" Loaded="tabBookList_Loaded">
+                <DataGrid x:Name="grdBookList" SelectionMode="Single" IsReadOnly="True" MouseDoubleClick="grdBookList_MouseDoubleClick" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Title" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" Width="150"/>
+                        <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="215"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <TabItem x:Name="tabCheckoutList" Header="Checkout List">
                 <Label Content="This is the Checkout List Tab"/>
