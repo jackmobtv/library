@@ -147,5 +147,10 @@ namespace DataAccessFakes
             }
             return user;
         }
+
+        public List<UserVM> selectAllUsers()
+        {
+            return _users;
+        }
     }
 }

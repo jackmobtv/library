@@ -175,7 +175,8 @@ INSERT INTO [dbo].[Author]
 VALUES
 	  ('Peter Ian Staker')
     , ('Revolver Ocelot')
-    , (N'Tracy Tormé')
+    , ('Tracy Torme')
+	, ('Morty Jr.')
 GO
 
 PRINT '' PRINT '*** Populating BookAuthor Table'
@@ -188,7 +189,7 @@ VALUES
     , (1000002, 1000002)
     , (1000003, 1000001)
     , (1000004, 1000002)
-    , (1000005, 1000000)
+    , (1000005, 1000003)
     , (1000006, 1000002)
 GO
 
@@ -410,6 +411,27 @@ AS
         JOIN [dbo].[Author]
             ON [BookAuthor].[AuthorID] = [Author].[AuthorID]
         ORDER BY [Book].[Name]
+
+    END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_copies_by_book_id'
+GO
+CREATE PROCEDURE [dbo].[sp_select_copies_by_book_id]
+(
+    @BookID INT
+)
+AS
+    BEGIN
+
+        SELECT
+              [CopyID]
+            , [BookID]
+            , [Condition]
+            , [Active]
+        FROM [dbo].[Copy]
+        WHERE [BookID] = @BookID
+        ORDER BY [CopyID]
 
     END
 GO

@@ -170,5 +170,19 @@ namespace LogicLayer
                 throw ex;
             }
         }
+
+        public List<UserVM> getAllUsers()
+        {
+            List<UserVM> users;
+            try
+            {
+                users = _userAccessor.selectAllUsers();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return users;
+        }
     }
 }

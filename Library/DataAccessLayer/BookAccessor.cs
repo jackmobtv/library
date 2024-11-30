@@ -50,5 +50,43 @@ namespace DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public List<Copy> selectCopiesByBookId(int bookId)
+        {
+            List<Copy> copies = new List<Copy>();
+
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_select_copies_by_book_id", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@BookID", SqlDbType.Int);
+            cmd.Parameters[0].Value = bookId;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read()) 
+                {
+                    copies.Add(new Copy()
+                    {
+                        CopyId = reader.GetInt32(0),
+                        BookId = reader.GetInt32(1),
+                        Condition = reader.GetString(2),
+                        Active = reader.GetBoolean(3)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return copies;
+        }
     }
 }

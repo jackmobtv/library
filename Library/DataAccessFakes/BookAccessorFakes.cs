@@ -11,10 +11,12 @@ namespace DataAccessFakes
     public class BookAccessorFakes : IBookAccessor
     {
         private List<Book> _books;
+        private List<Copy> _copies;
 
         public BookAccessorFakes() 
         { 
             _books = new List<Book>();
+            _copies = new List<Copy>();
 
             _books.Add(new Book()
             {
@@ -26,6 +28,28 @@ namespace DataAccessFakes
                 Publisher = "Ligma Balls",
             });
 
+            _copies.Add(new Copy()
+            {
+                CopyId = 100000,
+                BookId = 100000,
+                Condition = "Good",
+                Active = true
+            });
+            _copies.Add(new Copy()
+            {
+                CopyId = 100001,
+                BookId = 100000,
+                Condition = "Bad",
+                Active = false
+            });
+            _copies.Add(new Copy()
+            {
+                CopyId = 100002,
+                BookId = 100000,
+                Condition = "Torn Cover",
+                Active = true
+            });
+
             _books.Add(new Book()
             {
                 BookId = 100001,
@@ -34,6 +58,14 @@ namespace DataAccessFakes
                 Genre = "Biography",
                 Author = "John Microsoft",
                 Publisher = "John Apple",
+            });
+
+            _copies.Add(new Copy()
+            {
+                CopyId = 100003,
+                BookId = 100001,
+                Condition = "Excellent",
+                Active = true
             });
 
             _books.Add(new Book()
@@ -62,6 +94,21 @@ namespace DataAccessFakes
                 }
             }
             throw new ArgumentException("Book Not Found");
+        }
+
+        public List<Copy> selectCopiesByBookId(int bookId)
+        {
+            List<Copy> copies = new List<Copy>();
+
+            foreach (var copy in _copies)
+            {
+                if(copy.BookId == bookId)
+                {
+                    copies.Add(copy);
+                }
+            }
+
+            return copies;
         }
     }
 }

@@ -146,5 +146,15 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedUser.FirstName, user.FirstName);
         }
+
+        [TestMethod]
+        public void testGetAllUsers()
+        {
+            const int expectedValue = 5;
+
+            int actualValue = _userManager.getAllUsers().Count();
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
     }
 }

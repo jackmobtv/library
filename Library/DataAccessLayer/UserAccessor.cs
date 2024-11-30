@@ -209,5 +209,10 @@ namespace DataAccessLayer
 
             return user;
         }
+
+        public List<UserVM> selectAllUsers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace LogicLayer
     {
         public List<Book> getAllBooks();
         public Book getBookById(int bookId);
+        public List<Copy> getCopiesByBookId(int bookId);
     }
 }

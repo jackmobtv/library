@@ -46,5 +46,21 @@ namespace LogicLayer
             }
             return book;
         }
+
+        public List<Copy> getCopiesByBookId(int bookId)
+        {
+            List<Copy> copies = null;
+
+            try
+            {
+                copies = _bookAccessor.selectCopiesByBookId(bookId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+            return copies;
+        }
     }
 }

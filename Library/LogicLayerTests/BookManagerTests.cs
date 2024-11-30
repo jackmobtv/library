@@ -39,5 +39,16 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedValue, actualValue);
         }
+
+        [TestMethod]
+        public void testGetCopiesByBookId()
+        {
+            int bookId = 100000;
+            int expectedValue = 3;
+
+            int actualValue = _bookManager.getCopiesByBookId(bookId).Count();
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
     }
 }

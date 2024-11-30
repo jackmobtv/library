@@ -11,5 +11,6 @@ namespace DataAccessInterfaces
     {
         public List<Book> selectAllBooks();
         public Book selectBookById(int bookId);
+        public List<Copy> selectCopiesByBookId(int bookId);
     }
 }
