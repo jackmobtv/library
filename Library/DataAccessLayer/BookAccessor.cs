@@ -13,6 +13,21 @@ namespace DataAccessLayer
 {
     public class BookAccessor : IBookAccessor
     {
+        public void deactivateCopy(int copyId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void insertBook(Book book)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void insertCopy(Copy copy)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Book> selectAllBooks()
         {
             List<Book> books = new List<Book>();
@@ -87,6 +102,21 @@ namespace DataAccessLayer
             }
 
             return copies;
+        }
+
+        public Copy selectCopyById(int copyId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void updateBook(Book book, Book oldBook)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void updateCopy(Copy copy, Copy oldCopy)
+        {
+            throw new NotImplementedException();
         }
     }
 }

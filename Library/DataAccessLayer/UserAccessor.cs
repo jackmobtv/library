@@ -212,7 +212,41 @@ namespace DataAccessLayer
 
         public List<UserVM> selectAllUsers()
         {
-            throw new NotImplementedException();
+            List<UserVM> users = new List<UserVM>();
+
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_select_all_users", conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            try
+            {
+                conn.Open();
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    users.Add(new UserVM
+                    {
+                        UserId = reader.GetInt32(0),
+                        FirstName = reader.GetString(1),
+                        LastName = reader.GetString(2),
+                        Email = reader.GetString(3),
+                        Active = reader.GetBoolean(4)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return users;
         }
     }
 }

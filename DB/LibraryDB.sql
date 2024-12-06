@@ -435,3 +435,21 @@ AS
 
     END
 GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_all_users'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_users]
+AS
+	BEGIN
+	
+		SELECT
+			  [UserID]
+			, [FirstName]
+			, [LastName]
+			, [Email]
+			, [Active]
+		FROM [dbo].[User]
+		ORDER BY [UserID]
+	
+	END
+GO

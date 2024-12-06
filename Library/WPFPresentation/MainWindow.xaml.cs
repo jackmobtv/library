@@ -21,8 +21,9 @@ namespace WPFPresentation
     {
         private UserVM _accesskey = null;
         private BookManager _bookManager = new BookManager();
+        private UserManager _userManager = new UserManager();
         private List<Copy> _cart = new List<Copy>();
-        private bool _checkout = false;
+        private TabController _tab = new TabController();
         public MainWindow()
         {
             InitializeComponent();
@@ -58,11 +59,13 @@ namespace WPFPresentation
                                 break;
                             case "Librarian":
                                 tabMemberList.Visibility = Visibility.Visible;
+                                tabBookManagement.Visibility = Visibility.Visible;
                                 break;
                             case "Admin":
                                 tabCheckedOut.Visibility = Visibility.Visible;
                                 tabCheckoutList.Visibility = Visibility.Visible;
                                 tabMemberList.Visibility = Visibility.Visible;
+                                tabBookManagement.Visibility = Visibility.Visible;
                                 tabAdmin.Visibility = Visibility.Visible;
                                 break;
                             default:
@@ -106,6 +109,7 @@ namespace WPFPresentation
             tabCheckedOut.Visibility = Visibility.Hidden;
             tabCheckoutList.Visibility = Visibility.Hidden;
             tabMemberList.Visibility = Visibility.Hidden;
+            tabBookManagement.Visibility = Visibility.Hidden;
             tabAdmin.Visibility = Visibility.Hidden;
         }
 
@@ -176,7 +180,7 @@ namespace WPFPresentation
                         {
                             if (frm.selectedCopy.CopyId == copy.CopyId)
                             {
-                                MessageBox.Show("Copy is Already in Checkout List", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                MessageBox.Show("Selected Copy is Already in Checkout List", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                                 exists = true;
                             }
                         }
@@ -238,22 +242,79 @@ namespace WPFPresentation
             TabItem tab = tabControl.SelectedItem as TabItem;
             if(tab != null)
             {
-                if (tab.Header.ToString() == "Checkout List")
+                switch (tab.Header.ToString())
                 {
-                    if (!_checkout)
-                    {
-                        populateCheckoutList();
-                        _checkout = true;
-                    }
+                    case "Checkout List":
+                        _tab.BookList = false;
+                        _tab.CheckedOutList = false;
+                        _tab.MemberList = false;
+                        _tab.BookManagement = false;
+                        _tab.Admin = false;
+                        if (!_tab.CheckoutList)
+                        {
+                            populateCheckoutList();
+                            _tab.CheckoutList = true;
+                        }
+                        break;
+                    case "Book List":
+                        _tab.CheckoutList = false;
+                        _tab.CheckedOutList = false;
+                        _tab.MemberList = false;
+                        _tab.BookManagement = false;
+                        _tab.Admin = false;
+                        if (!_tab.BookList)
+                        {
+                            populateBookList();
+                            _tab.BookList = true;
+                        }
+                        break;
+                    case "Member List":
+                        _tab.BookList = false;
+                        _tab.CheckoutList = false;
+                        _tab.CheckedOutList = false;
+                        _tab.BookManagement = false;
+                        _tab.Admin = false;
+                        if (!_tab.MemberList)
+                        {
+                            populateMemberList();
+                            _tab.MemberList = true;
+                        }
+                        break;
+                    case "Checked Out":
+                        _tab.BookList = false;
+                        _tab.CheckoutList = false;
+                        _tab.MemberList = false;
+                        _tab.BookManagement = false;
+                        _tab.Admin = false;
+                        if (!_tab.CheckedOutList)
+                        {
+                            _tab.CheckedOutList = true;
+                        }
+                        break;
+                    case "Book Management":
+                        _tab.BookList = false;
+                        _tab.CheckoutList = false;
+                        _tab.CheckedOutList = false;
+                        _tab.MemberList = false;
+                        _tab.Admin = false;
+                        if (!_tab.BookManagement)
+                        {
+                            _tab.BookManagement = true;
+                            populateBookManagement();
+                        }
+                        break;
+                    case "Admin":
+                        _tab.BookList = false;
+                        _tab.CheckoutList = false;
+                        _tab.CheckedOutList = false;
+                        _tab.MemberList = false;
+                        _tab.BookManagement = false;
+                        if (!_tab.Admin)
+                        {
+                            _tab.Admin = true;
+                        }
+                        break;
                 }
-                else
-                {
-                    _checkout = false;
-                }
-            }
-            else
-            {
-                return;
             }
         }
 
@@ -279,12 +340,91 @@ namespace WPFPresentation
 
         private void btnCheckout_Click(object sender, RoutedEventArgs e)
         {
-            var confirm = MessageBox.Show("Check Out?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            if (confirm == MessageBoxResult.Yes)
+            if (!_cart.IsNullOrEmpty())
             {
-                _cart.Clear();
-                populateCheckoutList();
+                var confirm = MessageBox.Show("Check Out?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    _cart.Clear();
+                    populateCheckoutList();
+                }
             }
+        }
+
+        private void tabMemberList_Loaded(object sender, RoutedEventArgs e)
+        {
+            populateMemberList();
+        }
+
+        private void populateMemberList()
+        {
+            List<UserVM> users;
+            try
+            {
+                users = _userManager.getAllUsers();
+                if (users == null)
+                {
+                    throw new Exception("Member List is Null.");
+                }
+                else
+                {
+                    grdMemberList.ItemsSource = users;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnAddBook_Click(object sender, RoutedEventArgs e)
+        {  
+            var frm = new frmCreateEditBook();
+            frm.ShowDialog();
+            if (frm.Success)
+            {
+                populateBookManagement();
+            }
+        }
+
+        private void btnUpdateBook_Click(object sender, RoutedEventArgs e)
+        {
+            var book = grdBookManagement.SelectedItem as Book;
+            if (book != null)
+            {
+                var frm = new frmCreateEditBook(book);
+                frm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Please Select a Book", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void populateBookManagement()
+        {
+            List<Book> books;
+            try
+            {
+                books = _bookManager.getAllBooks();
+                if (books == null)
+                {
+                    throw new Exception("Book List is Null.");
+                }
+                else
+                {
+                    grdBookManagement.ItemsSource = books;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void tabBookManagement_Loaded(object sender, RoutedEventArgs e)
+        {
+            populateBookManagement();
         }
     }
 }

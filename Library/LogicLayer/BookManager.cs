@@ -21,6 +21,59 @@ namespace LogicLayer
             _bookAccessor = bookAccessor;
         }
 
+        public void addBook(Book book)
+        {
+            try
+            {
+                _bookAccessor.insertBook(book);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void addCopy(Copy copy)
+        {
+            try
+            {
+                _bookAccessor.insertCopy(copy);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void deactivateCopy(int copyId)
+        {
+            _bookAccessor.deactivateCopy(copyId);
+        }
+
+        public void editBook(Book book, Book oldBook)
+        {
+            try
+            {
+                _bookAccessor.updateBook(book, oldBook);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void editCopy(Copy copy, Copy oldCopy)
+        {
+            try
+            {
+                _bookAccessor.updateCopy(copy, oldCopy);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<Book> getAllBooks()
         {
             try
@@ -61,6 +114,18 @@ namespace LogicLayer
             }
             
             return copies;
+        }
+
+        public Copy getCopyById(int copyId)
+        {
+            try
+            {
+                return _bookAccessor.selectCopyById(copyId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

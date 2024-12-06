@@ -50,8 +50,40 @@
             <TabItem x:Name="tabCheckedOut" Header="Checked Out">
                 <Label Content="This is the Checked Out Tab"/>
             </TabItem>
-            <TabItem x:Name="tabMemberList" Header="Member List">
-                <Label Content="This is the Member List Tab"/>
+            <TabItem x:Name="tabMemberList" Header="Member List" Loaded="tabMemberList_Loaded">
+                <Grid>
+                    <DataGrid Grid.Row="0" x:Name="grdMemberList" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="230"/>
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="300"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                            <DataGridTextColumn Header="Active" Binding="{Binding Active}" Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabBookManagement" Header="Book Management" Loaded="tabBookManagement_Loaded">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid Grid.Row="0" x:Name="grdBookManagement" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Title" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" Width="150"/>
+                            <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="215"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" FontSize="30" Height="50" Width="150" Margin="0 0 20 0" x:Name="btnAddBook" VerticalAlignment="Center" HorizontalAlignment="Right" Click="btnAddBook_Click">Add Book</Button>
+                        <Button Grid.Column="1" FontSize="30" Height="50" Width="200" Margin="20 0 0 0" x:Name="btnUpdateBook" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnUpdateBook_Click">Update Book</Button>
+                    </Grid>
+                </Grid>
             </TabItem>
             <TabItem x:Name="tabAdmin" Header="Admin">
                 <Label Content="This is the Admin Tab"/>

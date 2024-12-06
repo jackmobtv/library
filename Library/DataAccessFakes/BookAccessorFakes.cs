@@ -79,6 +79,29 @@ namespace DataAccessFakes
             });
         }
 
+        public void deactivateCopy(int copyId)
+        {
+            foreach (var copy in _copies)
+            {
+                if(copy.CopyId == copyId)
+                {
+                    copy.Active = false;
+                    return;
+                }
+            }
+            throw new ArgumentException("Copy Not Found");
+        }
+
+        public void insertBook(Book book)
+        {
+            _books.Add(book);
+        }
+
+        public void insertCopy(Copy copy)
+        {
+            _copies.Add(copy);
+        }
+
         public List<Book> selectAllBooks()
         {
             return _books;
@@ -109,6 +132,44 @@ namespace DataAccessFakes
             }
 
             return copies;
+        }
+
+        public Copy selectCopyById(int copyId)
+        {
+            foreach (var copy in _copies)
+            {
+                if (copy.CopyId == copyId)
+                {
+                    return copy;
+                }
+            }
+            throw new ArgumentException("Copy Not Found");
+        }
+
+        public void updateBook(Book book, Book oldBook)
+        {
+            for (int i = 0; i < _books.Count; i++)
+            {
+                if (_books[i].BookId == oldBook.BookId)
+                {
+                    _books[i] = book;
+                    return;
+                }
+            }
+            throw new ArgumentException("Book Not Found");
+        }
+
+        public void updateCopy(Copy copy, Copy oldCopy)
+        {
+            for (int i = 0; i < _copies.Count; i++)
+            {
+                if (_copies[i].CopyId == oldCopy.CopyId)
+                {
+                    _copies[i] = copy;
+                    return;
+                }
+            }
+            throw new ArgumentException("Book Not Found");
         }
     }
 }

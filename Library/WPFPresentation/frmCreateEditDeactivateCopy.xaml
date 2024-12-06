@@ -1,0 +1,32 @@
+﻿<Window x:Class="WPFPresentation.frmCreateEditDeactivateCopy"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFPresentation"
+        mc:Ignorable="d"
+        Title="frmCreateEditDeactivateCopy" Height="150" Width="225" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="95"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">Condition</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtCondition" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"></TextBox>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" x:Name="btnCopyConfirm" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0">Confirm</Button>
+            <Button Grid.Column="1" x:Name="btnDeactivateCopy" VerticalAlignment="Center" HorizontalAlignment="Left" Background="Red" Margin="20 0 0 0">Deactivate</Button>
+        </Grid>
+    </Grid>
+</Window>
