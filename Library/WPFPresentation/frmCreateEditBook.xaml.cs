@@ -2,6 +2,7 @@
 using LogicLayer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -25,10 +26,10 @@ namespace WPFPresentation
         private Book _book;
         private List<Copy> _copies;
         private BookManager _bookManager = new BookManager();
-        public bool Success { get; private set; } = false;
         public frmCreateEditBook()
         {
             InitializeComponent();
+            _book = null;
         }
         public frmCreateEditBook(Book book)
         {
@@ -52,7 +53,16 @@ namespace WPFPresentation
 
         private void btnAddCopy_Click(object sender, RoutedEventArgs e)
         {
-            new frmCreateEditDeactivateCopy().ShowDialog();
+            if(_book != null)
+            {
+                new frmCreateEditDeactivateCopy(_book.BookId).ShowDialog();
+                _copies = _bookManager.getCopiesByBookId(_book.BookId);
+                grdCopyList.ItemsSource = _copies;
+            }
+            else
+            {
+                MessageBox.Show("Please Create The Book Before Creating Copies", "", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void btnUpdateCopy_Click(object sender, RoutedEventArgs e)
@@ -62,35 +72,198 @@ namespace WPFPresentation
                 var copy = grdCopyList.SelectedItem as Copy;
                 if (copy != null)
                 {
-                    new frmCreateEditDeactivateCopy(copy.Condition).ShowDialog();
+                    new frmCreateEditDeactivateCopy(copy, _book.BookId).ShowDialog();
+                    _copies = _bookManager.getCopiesByBookId(_book.BookId);
+                    grdCopyList.ItemsSource = _copies;
                 }
             }
         }
 
-        private void btnDeactiveCopy_Click(object sender, RoutedEventArgs e)
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
-            if (grdCopyList.SelectedItem != null)
+            try
             {
-                var copy = grdCopyList.SelectedItem as Copy;
-                if (copy != null)
+                if (txtTitle.Text.Trim() == "")
                 {
-                    if (copy.Active)
+                    MessageBox.Show("Title is Empty", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (txtAuthor.Text.Trim() == "")
+                {
+                    MessageBox.Show("Author is Empty", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (txtDescription.Text.Trim() == "")
+                {
+                    MessageBox.Show("Description is Empty", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (txtGenre.Text.Trim() == "")
+                {
+                    MessageBox.Show("Genre is Empty", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (txtPublisher.Text.Trim() == "")
+                {
+                    MessageBox.Show("Publisher is Empty", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                int GenreId = 0;
+                int PublisherId = 0;
+                List<Genre> genres = _bookManager.getAllGenres();
+                List<Publisher> publishers = _bookManager.getAllPublishers();
+
+                foreach (var genre in genres)
+                {
+                    if (genre.Name == txtGenre.Text)
                     {
-                        var confirm = MessageBox.Show("Deactivate Copy?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
-                        if (confirm == MessageBoxResult.Yes)
-                        {
-                            return;
-                        }
+                        GenreId = genre.GenreId;
+                        break;
                     }
-                    else
+                }
+                if (GenreId == 0)
+                {
+                    
+                    var frm = new frmCreateGenre();
+                    frm.ShowDialog();
+                    if (frm.Description is null)
                     {
-                        var confirm = MessageBox.Show("Reactivate Copy?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
-                        if (confirm == MessageBoxResult.Yes)
+                        MessageBox.Show("A Description is Required", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    Genre newGenre = new Genre()
+                    {
+                        Name = txtGenre.Text,
+                        Description = frm.Description
+                    };
+                    
+                    _bookManager.addGenre(newGenre);
+
+                    genres = _bookManager.getAllGenres();
+
+                    foreach (var genre in genres)
+                    {
+                        if (genre.Name == txtGenre.Text)
                         {
-                            return;
+                            GenreId = genre.GenreId;
+                            break;
                         }
                     }
                 }
+
+                foreach (var publisher in publishers)
+                {
+                    if (publisher.Name == txtPublisher.Text)
+                    {
+                        PublisherId = publisher.PublisherId;
+                        break;
+                    }
+                }
+                if (PublisherId == 0)
+                {
+                    _bookManager.addPublisher(txtPublisher.Text);
+
+                    publishers = _bookManager.getAllPublishers();
+
+                    foreach (var publisher in publishers)
+                    {
+                        if (publisher.Name == txtPublisher.Text)
+                        {
+                            PublisherId = publisher.PublisherId;
+                            break;
+                        }
+                    }
+                }
+
+                if (_book != null)
+                {
+                    Book oldBook = _bookManager.getBookById(_book.BookId);
+                    int oldGenre = 0;
+                    int oldPublisher = 0;
+
+                    foreach (var genre in _bookManager.getAllGenres())
+                    {
+                        if (genre.Name == _book.Genre)
+                        {
+                            oldGenre = genre.GenreId;
+                            break;
+                        }
+                    }
+                    foreach (var publisher in _bookManager.getAllPublishers())
+                    {
+                        if (publisher.Name == _book.Publisher)
+                        {
+                            oldPublisher = publisher.PublisherId;
+                            break;
+                        }
+                    }
+
+                    if (oldGenre == 0 || oldPublisher == 0)
+                    {
+                        MessageBox.Show("ERROR", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    _book.Name = txtTitle.Text;
+                    _book.Description = txtDescription.Text;
+                    _book.Author = txtAuthor.Text;
+
+                    bool yes = false;
+                    foreach (var author in _bookManager.getAllAuthors())
+                    {
+                        if (!yes && author.Name == _book.Author)
+                        {
+                            _bookManager.editAuthor(author.AuthorId, _book.BookId);
+                            yes = true;
+                        }
+                    }
+                    if (!yes)
+                    {
+                        _bookManager.addAuthor(_book.Author, _book.BookId);
+                    }
+
+                    _bookManager.editBook(_book, oldBook, GenreId, PublisherId, oldGenre, oldPublisher);
+                    this.Close();
+                }
+                else
+                {
+                    _book = new Book()
+                    {
+                        Name = txtTitle.Text,
+                        Author = txtAuthor.Text,
+                        Description = txtDescription.Text
+                    };
+
+                    _bookManager.addBook(_book, GenreId, PublisherId);
+
+                    foreach (var book in _bookManager.getBookTable())
+                    {
+                        if(book.Name == _book.Name && book.Description == _book.Description)
+                        {
+                            bool yes = false;
+                            foreach (var author in _bookManager.getAllAuthors())
+                            {
+                                if (author.Name == _book.Author)
+                                {
+                                    _bookManager.addBookAuthor(author.AuthorId, _book.BookId);
+                                    yes = true;
+                                }
+                            }
+                            if (!yes)
+                            {
+                                _bookManager.addBookAuthor(1000000, book.BookId);
+                                _bookManager.addAuthor(_book.Author, book.BookId);
+                            }
+                        }
+                    }
+                }
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

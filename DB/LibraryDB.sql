@@ -362,7 +362,7 @@ AS
     COMMIT TRANSACTION
 GO
 
-PRINT '' PRINT '*** Creating Procedure sp_insert_user'
+PRINT '' PRINT '*** Creating Procedure sp_update_user'
 GO
 CREATE PROCEDURE [dbo].[sp_update_user]
 (
@@ -450,6 +450,336 @@ AS
 			, [Active]
 		FROM [dbo].[User]
 		ORDER BY [UserID]
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_copy_by_id'
+GO
+CREATE PROCEDURE [dbo].[sp_select_copy_by_id]
+(
+    @CopyID INT
+)
+AS
+    BEGIN
+
+        SELECT
+              [CopyID]
+            , [BookID]
+            , [Condition]
+            , [Active]
+        FROM [dbo].[Copy]
+        WHERE [CopyID] = @CopyID
+
+    END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_insert_book'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_book]
+(
+      @Name NVARCHAR(255)
+    , @Description NVARCHAR(255)
+    , @GenreID INT
+    , @PublisherID INT
+)
+AS
+    BEGIN
+
+        INSERT INTO [dbo].[Book]
+            (GenreID, PublisherID, Name, Description)
+        VALUES
+            (@GenreID, @PublisherID, @Name, @Description)
+
+    END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_update_book'
+GO
+CREATE PROCEDURE [dbo].[sp_update_book]
+(
+      @BookID INT
+    , @Name NVARCHAR(255)
+    , @Description NVARCHAR(255)
+    , @GenreID INT
+    , @PublisherID INT
+    , @Name_Old NVARCHAR(255)
+    , @Description_Old NVARCHAR(255)
+    , @GenreID_Old INT
+    , @PublisherID_Old INT
+)
+AS
+    BEGIN
+
+        UPDATE [dbo].[Book]
+        SET
+              [Name] = @Name
+            , [Description] = @Description
+            , [GenreID] = @GenreID
+            , [PublisherID] = @PublisherID
+        WHERE
+            [BookID] = @BookID
+                AND
+            [Name] = @Name_Old
+                AND
+            [Description] = @Description_Old
+                AND
+            [GenreID] = @GenreID_Old
+                AND
+            [PublisherID] = @PublisherID_Old
+
+    END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_insert_copy'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_copy]
+(
+      @BookID INT
+    , @Condition NVARCHAR(255)
+)
+AS
+    BEGIN
+
+        INSERT INTO [dbo].[Copy]
+            (BookID, Condition)
+        VALUES
+            (@BookID, @Condition)
+
+    END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_update_copy'
+GO
+CREATE PROCEDURE [dbo].[sp_update_copy]
+(
+      @CopyID INT
+    , @Condition NVARCHAR(255)
+    , @Condition_Old NVARCHAR(255)
+)
+AS
+    BEGIN
+
+        UPDATE [dbo].[Copy]
+        SET
+            [Condition] = @Condition
+        WHERE
+            [CopyID] = @CopyID
+                AND
+            [Condition] = @Condition_Old
+
+    END
+GO
+
+PRINT '' PRINT '*** Create Procedure sp_deactivate_copy'
+GO
+CREATE PROCEDURE [dbo].[sp_deactivate_copy]
+(
+    @CopyID INT
+)
+AS
+    BEGIN
+
+        UPDATE [dbo].[Copy]
+        SET
+            [Active] = 0
+        WHERE [CopyID] = @CopyID
+
+    END
+GO
+
+PRINT '' PRINT '*** Create Procedure sp_activate_copy'
+GO
+CREATE PROCEDURE [dbo].[sp_activate_copy]
+(
+    @CopyID INT
+)
+AS
+    BEGIN
+
+        UPDATE [dbo].[Copy]
+        SET
+            [Active] = 1
+        WHERE [CopyID] = @CopyID
+
+    END
+GO
+
+PRINT '' PRINT '*** Create Procedure sp_select_all_genres'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_genres]
+AS
+    BEGIN
+
+        SELECT
+              [GenreID]
+            , [Name]
+            , [Description]
+        FROM [dbo].[Genre]
+
+    END
+GO
+
+PRINT '' PRINT '*** Create Procedure sp_insert_genre'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_genre]
+(
+      @Name NVARCHAR(100)
+    , @Description NVARCHAR(255)
+)
+AS
+    BEGIN
+
+        INSERT INTO [dbo].[Genre]
+            (Name, Description)
+        VALUES
+            (@Name, @Description)
+
+    END
+GO
+
+PRINT '' PRINT '*** Create Procedure sp_select_all_publishers'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_publishers]
+AS
+    BEGIN
+
+        SELECT
+              [PublisherID]
+            , [Name]
+        FROM [dbo].[Publisher]
+
+    END
+GO
+
+PRINT '' PRINT '*** Create Procedure sp_insert_publisher'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_publisher]
+(
+    @Name NVARCHAR(100)
+)
+AS
+    BEGIN
+
+        INSERT INTO [dbo].[Publisher]
+            (Name)
+        VALUES
+            (@Name)
+
+    END
+GO
+
+PRINT '' PRINT '*** Create Procedure sp_select_book_by_id'
+GO
+CREATE PROCEDURE [dbo].[sp_select_book_by_id]
+(
+	@BookID INT
+)
+AS
+	BEGIN
+	
+		SELECT
+			  [Book].[BookID]
+            , [Name]
+            , [Description]
+            , [GenreID]
+            , [AuthorID]
+            , [PublisherID]
+		FROM [Book]
+		JOIN [BookAuthor]
+			ON [Book].[BookID] = [BookAuthor].[BookID]
+		WHERE [Book].[BookID] = @BookID
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_all_authors'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_authors]
+AS
+	BEGIN
+	
+		SELECT
+			  [BookAuthor].[AuthorID]
+			, [BookID]
+			, [Name]
+		FROM [BookAuthor]
+		JOIN [Author] ON [BookAuthor].[AuthorID] = [Author].[AuthorID]
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_insert_author'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_author]
+(
+	  @Name NVARCHAR(255)
+	, @BookID INT
+)
+AS
+	BEGIN
+	
+		INSERT INTO [dbo].[Author]
+			(Name)
+		VALUES
+			(@Name)
+		
+		UPDATE [dbo].[BookAuthor]
+		SET [AuthorID] = @@IDENTITY
+		WHERE [BookID] = @BookID
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_insert_bookauthor'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_bookauthor]
+(
+	  @BookID INT
+	, @AuthorID INT
+)
+AS
+	BEGIN
+	
+		INSERT INTO [dbo].[BookAuthor]
+			(BookID, AuthorID)
+		VALUES
+			(@BookID, @AuthorID)
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_update_author'
+GO
+CREATE PROCEDURE [dbo].[sp_update_author]
+(
+	  @BookID INT
+	, @AuthorID INT
+)
+AS
+	BEGIN
+	
+		UPDATE [dbo].[BookAuthor]
+		SET
+			[AuthorID] = @AuthorID
+		WHERE [BookID] = @BookID
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_book_table'
+GO
+CREATE PROCEDURE [dbo].[sp_select_book_table]
+AS
+	BEGIN
+	
+		SELECT
+			  [BookID]
+            , [Name]
+            , [Description]
+            , [GenreID]
+            , [PublisherID]
+		FROM [Book]
 	
 	END
 GO

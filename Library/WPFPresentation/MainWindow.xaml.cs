@@ -381,10 +381,7 @@ namespace WPFPresentation
         {  
             var frm = new frmCreateEditBook();
             frm.ShowDialog();
-            if (frm.Success)
-            {
-                populateBookManagement();
-            }
+            populateBookManagement();
         }
 
         private void btnUpdateBook_Click(object sender, RoutedEventArgs e)
@@ -394,6 +391,7 @@ namespace WPFPresentation
             {
                 var frm = new frmCreateEditBook(book);
                 frm.ShowDialog();
+                populateBookManagement();
             }
             else
             {

@@ -49,7 +49,7 @@
             </Grid>
 
             <TextBox x:Name="txtDescription" Grid.Row="2" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"></TextBox>
-            <Button x:Name="btnConfirm" Padding="10 5 10 5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">Confirm</Button>
+            <Button x:Name="btnConfirm" Padding="10 5 10 5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnConfirm_Click">Confirm</Button>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

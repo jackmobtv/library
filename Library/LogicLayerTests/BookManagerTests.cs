@@ -67,7 +67,7 @@ namespace LogicLayerTests
             int expectedValue = 4;
             int actualValue;
             
-            _bookManager.addBook(book);
+            _bookManager.addBook(book, 1, 1);
             actualValue = _bookManager.getAllBooks().Count;
 
             Assert.AreEqual(expectedValue, actualValue);
@@ -96,7 +96,7 @@ namespace LogicLayerTests
                 Publisher = "Hans Gruber",
             };
 
-            _bookManager.editBook(book, oldBook);
+            _bookManager.editBook(book, oldBook, 1, 1, 1, 1);
             Book expectedBook = _bookManager.getBookById(book.BookId);
 
             Assert.AreEqual(book.Name, expectedBook.Name);
@@ -164,6 +164,106 @@ namespace LogicLayerTests
             string actualValue;
 
             actualValue = _bookManager.getCopyById(copyId).Condition;
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [TestMethod]
+        public void testActivateCopy()
+        {
+            const int copyId = 100000;
+
+            _bookManager.activateCopy(copyId);
+
+            Assert.IsTrue(_bookManager.getCopyById(copyId).Active);
+        }
+
+        [TestMethod]
+        public void testGetAllGenres()
+        {
+            int expectedValue = 3;
+
+            int actualValue = _bookManager.getAllGenres().Count();
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [TestMethod]
+        public void testAddGenre()
+        {
+            Genre genre = new Genre()
+            {
+                Name = "Test1",
+                Description = "Descripp"
+            };
+            int expectedValue = 4;
+            int actualValue;
+
+            _bookManager.addGenre(genre);
+            actualValue = _bookManager.getAllGenres().Count;
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [TestMethod]
+        public void testGetAllPublishers()
+        {
+            int expectedValue = 3;
+
+            int actualValue = _bookManager.getAllPublishers().Count();
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [TestMethod]
+        public void testAddPublisher()
+        {
+            const string name = "Genre4";
+            int expectedValue = 4;
+            int actualValue;
+
+            _bookManager.addPublisher(name);
+            actualValue = _bookManager.getAllPublishers().Count;
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [TestMethod]
+        public void testAddAuthor()
+        {
+            const int expectedValue = 4;
+            int actualValue;
+
+            _bookManager.addAuthor("H", 122);
+            actualValue = _bookManager.getAllAuthors().Count;
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [TestMethod]
+        public void testEditAuthor()
+        {
+            _bookManager.editAuthor(1000000, 1000000);
+        }
+
+        [TestMethod]
+        public void testGetAllAuthors()
+        {
+            const int expectedValue = 3;
+            int actualValue;
+
+            actualValue = _bookManager.getAllAuthors().Count();
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [TestMethod]
+        public void testGetBookTable()
+        {
+            const int expectedValue = 3;
+            int actualValue;
+
+            actualValue = _bookManager.getBookTable().Count();
 
             Assert.AreEqual(expectedValue, actualValue);
         }

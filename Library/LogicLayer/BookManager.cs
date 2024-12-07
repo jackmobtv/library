@@ -21,16 +21,45 @@ namespace LogicLayer
             _bookAccessor = bookAccessor;
         }
 
-        public void addBook(Book book)
+        public void activateCopy(int copyId)
         {
             try
             {
-                _bookAccessor.insertBook(book);
+                _bookAccessor.activateCopy(copyId);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        public void addAuthor(string name, int bookId)
+        {
+            try
+            {
+                _bookAccessor.insertAuthor(name, bookId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void addBook(Book book, int genreId, int publisherId)
+        {
+            try
+            {
+                _bookAccessor.insertBook(book, genreId, publisherId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void addBookAuthor(int authorId, int bookId)
+        {
+            _bookAccessor.insertBookAuthor(authorId, bookId);
         }
 
         public void addCopy(Copy copy)
@@ -45,16 +74,52 @@ namespace LogicLayer
             }
         }
 
-        public void deactivateCopy(int copyId)
-        {
-            _bookAccessor.deactivateCopy(copyId);
-        }
-
-        public void editBook(Book book, Book oldBook)
+        public void addGenre(Genre genre)
         {
             try
             {
-                _bookAccessor.updateBook(book, oldBook);
+                _bookAccessor.insertGenre(genre);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void addPublisher(string name)
+        {
+            try
+            {
+                _bookAccessor.insertPublisher(name);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void deactivateCopy(int copyId)
+        {
+            try
+            {
+                _bookAccessor.deactivateCopy(copyId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void editAuthor(int authorId, int bookId)
+        {
+            _bookAccessor.updateAuthor(authorId, bookId);
+        }
+
+        public void editBook(Book book, Book oldBook, int genreId, int publisherId, int genreId_Old, int publisherId_Old)
+        {
+            try
+            {
+                _bookAccessor.updateBook(book, oldBook, genreId, publisherId, genreId_Old, publisherId_Old);
             }
             catch (Exception ex)
             {
@@ -74,11 +139,40 @@ namespace LogicLayer
             }
         }
 
+        public List<Author> getAllAuthors()
+        {
+            return _bookAccessor.selectAllAuthors();
+        }
+
         public List<Book> getAllBooks()
         {
             try
             {
                 return _bookAccessor.selectAllBooks();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Genre> getAllGenres()
+        {
+            try
+            {
+                return _bookAccessor.selectAllGenres();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Publisher> getAllPublishers()
+        {
+            try
+            {
+                return _bookAccessor.selectAllPublishers();
             }
             catch (Exception ex)
             {
@@ -98,6 +192,11 @@ namespace LogicLayer
                 throw ex;
             }
             return book;
+        }
+
+        public List<Book> getBookTable()
+        {
+            return _bookAccessor.selectBookTable();
         }
 
         public List<Copy> getCopiesByBookId(int bookId)

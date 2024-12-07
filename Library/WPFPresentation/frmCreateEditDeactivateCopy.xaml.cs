@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DataDomain;
+using LogicLayer;
 
 namespace WPFPresentation
 {
@@ -19,15 +21,84 @@ namespace WPFPresentation
     /// </summary>
     public partial class frmCreateEditDeactivateCopy : Window
     {
-        public frmCreateEditDeactivateCopy()
+        private Copy _copy = null;
+        private int id;
+        private BookManager _bookManager = new BookManager();
+        public frmCreateEditDeactivateCopy(int id)
         {
             InitializeComponent();
             btnDeactivateCopy.Visibility = Visibility.Hidden;
+            this.id = id;
         }
-        public frmCreateEditDeactivateCopy(string condition)
+        public frmCreateEditDeactivateCopy(Copy copy, int id)
         {
             InitializeComponent();
-            txtCondition.Text = condition;
+            _copy = copy;
+            this.id = id;
+            txtCondition.Text = copy.Condition;
+            if(!copy.Active)
+            {
+                btnDeactivateCopy.Content = "Activate Copy";
+            }
+        }
+
+        private void btnCopyConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (txtCondition.Text != "")
+                {
+                    if (_copy is null)
+                    {
+                        _bookManager.addCopy(new Copy
+                        {
+                            BookId = id,
+                            Condition = txtCondition.Text,
+                            Active = true
+                        });
+                        this.Close();
+                    }
+                    else
+                    {
+                        _copy.Condition = txtCondition.Text;
+                        Copy oldCopy = _bookManager.getCopyById(_copy.CopyId);
+                        _bookManager.editCopy(_copy, oldCopy);
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Enter a Condition", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btnDeactivateCopy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var confirm = MessageBox.Show("Are You Sure?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    if (_copy.Active)
+                    {
+                        _bookManager.deactivateCopy(_copy.CopyId);
+                    }
+                    else
+                    {
+                        _bookManager.activateCopy(_copy.CopyId);
+                    }
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

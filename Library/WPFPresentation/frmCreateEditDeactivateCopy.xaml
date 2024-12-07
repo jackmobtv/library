@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFPresentation"
         mc:Ignorable="d"
-        Title="frmCreateEditDeactivateCopy" Height="150" Width="225" ResizeMode="NoResize">
+        Title="Copy Edit" Height="150" Width="225" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -25,8 +25,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" x:Name="btnCopyConfirm" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0">Confirm</Button>
-            <Button Grid.Column="1" x:Name="btnDeactivateCopy" VerticalAlignment="Center" HorizontalAlignment="Left" Background="Red" Margin="20 0 0 0">Deactivate</Button>
+            <Button Grid.Column="0" x:Name="btnCopyConfirm" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0" Click="btnCopyConfirm_Click">Confirm</Button>
+            <Button Grid.Column="1" x:Name="btnDeactivateCopy" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0" Click="btnDeactivateCopy_Click">Deactivate</Button>
         </Grid>
     </Grid>
 </Window>

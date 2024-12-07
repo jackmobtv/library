@@ -12,11 +12,17 @@ namespace DataAccessFakes
     {
         private List<Book> _books;
         private List<Copy> _copies;
+        private List<Genre> _genres;
+        private List<Publisher> _publishers;
+        private List<Author> _authors;
 
         public BookAccessorFakes() 
         { 
             _books = new List<Book>();
             _copies = new List<Copy>();
+            _genres = new List<Genre>();
+            _publishers = new List<Publisher>();
+            _authors = new List<Author>();
 
             _books.Add(new Book()
             {
@@ -77,6 +83,55 @@ namespace DataAccessFakes
                 Author = "John McClaine",
                 Publisher = "Hans Gruber",
             });
+
+            _genres.Add(new Genre()
+            {
+                Name = "Genre1",
+                Description = "Genre1Description"
+            });
+            _genres.Add(new Genre()
+            {
+                Name = "Genre2",
+                Description = "Genre2Description"
+            });
+            _genres.Add(new Genre()
+            {
+                Name = "Genre3",
+                Description = "Genre3Description"
+            });
+
+            _publishers.Add(new Publisher() { Name = "Publisher1" });
+            _publishers.Add(new Publisher() { Name = "Publisher2" });
+            _publishers.Add(new Publisher() { Name = "Publisher3" });
+
+            _authors.Add(new Author()
+            {
+                AuthorId = 1000000,
+                Name = "Author1"
+            });
+            _authors.Add(new Author()
+            {
+                AuthorId = 1000001,
+                Name = "Author2"
+            });
+            _authors.Add(new Author()
+            {
+                AuthorId = 1000002,
+                Name = "Author3"
+            });
+        }
+
+        public void activateCopy(int copyId)
+        {
+            foreach (var copy in _copies)
+            {
+                if (copy.CopyId == copyId)
+                {
+                    copy.Active = true;
+                    return;
+                }
+            }
+            throw new ArgumentException("Copy Not Found");
         }
 
         public void deactivateCopy(int copyId)
@@ -92,9 +147,27 @@ namespace DataAccessFakes
             throw new ArgumentException("Copy Not Found");
         }
 
-        public void insertBook(Book book)
+        public List<Book> selectBookTable()
+        {
+            return _books;
+        }
+
+        public void insertAuthor(string name, int bookId)
+        {
+            _authors.Add(new Author()
+            {
+                Name = name,
+            });
+        }
+
+        public void insertBook(Book book, int genreId, int publisherId)
         {
             _books.Add(book);
+        }
+
+        public void insertBookAuthor(int authorId, int bookId)
+        {
+            throw new NotImplementedException();
         }
 
         public void insertCopy(Copy copy)
@@ -102,9 +175,34 @@ namespace DataAccessFakes
             _copies.Add(copy);
         }
 
+        public void insertGenre(Genre genre)
+        {
+            _genres.Add(genre);
+        }
+
+        public void insertPublisher(string name)
+        {
+            _publishers.Add(new Publisher() { Name = name });
+        }
+
+        public List<Author> selectAllAuthors()
+        {
+            return _authors;
+        }
+
         public List<Book> selectAllBooks()
         {
             return _books;
+        }
+
+        public List<Genre> selectAllGenres()
+        {
+            return _genres;
+        }
+
+        public List<Publisher> selectAllPublishers()
+        {
+            return _publishers;
         }
 
         public Book selectBookById(int bookId)
@@ -146,7 +244,19 @@ namespace DataAccessFakes
             throw new ArgumentException("Copy Not Found");
         }
 
-        public void updateBook(Book book, Book oldBook)
+        public void updateAuthor(int authorId, int bookId)
+        {
+            for (int i = 0; i < _authors.Count; i++)
+            {
+                if (_authors[i].AuthorId == authorId)
+                {
+                    return;
+                }
+            }
+            throw new ArgumentException("Author Not Found");
+        }
+
+        public void updateBook(Book book, Book oldBook, int genreId, int publisherId, int genreId_Old, int publisherId_Old)
         {
             for (int i = 0; i < _books.Count; i++)
             {
