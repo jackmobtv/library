@@ -30,19 +30,19 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">First Name</Label>
-        <TextBox Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="txtFirstName"></TextBox>
+        <TextBox Grid.Column="2" MaxLength="255" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="txtFirstName"></TextBox>
 
         <Label Grid.Column="4" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">Last Name</Label>
-        <TextBox Grid.Column="5" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="txtLastName"></TextBox>
+        <TextBox Grid.Column="5" MaxLength="255" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="txtLastName"></TextBox>
 
         <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="lblOldEmail">Email</Label>
-        <TextBox Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="txtEmail"></TextBox>
+        <TextBox Grid.Column="2" MaxLength="255" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="txtEmail"></TextBox>
 
         <Label Grid.Column="4" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="lblOldPassword">Password</Label>
         <PasswordBox Grid.Column="5" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="pwdPassword"></PasswordBox>
 
         <Label Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="lblNewEmail">New Email</Label>
-        <TextBox Grid.Column="2" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="txtNewEmail"></TextBox>
+        <TextBox Grid.Column="2" MaxLength="255" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="txtNewEmail"></TextBox>
 
         <Label Grid.Column="4" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="lblNewPassword">New Password</Label>
         <PasswordBox Grid.Column="5" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="149" Height="30" Padding="0 5 0 0" x:Name="pwdNewPassword"></PasswordBox>

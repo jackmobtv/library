@@ -48,7 +48,13 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabCheckedOut" Header="Checked Out">
-                <Label Content="This is the Checked Out Tab"/>
+                <DataGrid Grid.Row="0" x:Name="grdCheckedOutList" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="grdCheckedOutList_MouseDoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding CopyId}" Width="20"/>
+                        <DataGridTextColumn Header="Title" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Condition" Binding="{Binding Condition}" Width="400"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <TabItem x:Name="tabMemberList" Header="Member List" Loaded="tabMemberList_Loaded">
                 <Grid>

@@ -16,7 +16,7 @@ GO
 PRINT '' PRINT '*** creating Publisher table'
 GO
 CREATE TABLE [dbo].[Publisher] (
-      [PublisherID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
+      [PublisherID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [Name] [NVARCHAR](255) UNIQUE
 )
 GO
@@ -24,7 +24,7 @@ GO
 PRINT '' PRINT '*** creating Genre table'
 GO
 CREATE TABLE [dbo].[Genre] (
-      [GenreID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
+      [GenreID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [Name] [NVARCHAR](100) NOT NULL UNIQUE
     , [Description] [NVARCHAR](255) NOT NULL UNIQUE
 )
@@ -33,7 +33,7 @@ GO
 PRINT '' PRINT '*** creating Book table'
 GO
 CREATE TABLE [dbo].[Book] (
-      [BookID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
+      [BookID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [GenreID] [INT] NOT NULL
     , [PublisherID] [INT] NOT NULL
     , [Name] [NVARCHAR](255)
@@ -47,7 +47,7 @@ GO
 PRINT '' PRINT '*** creating Author table'
 GO
 CREATE TABLE [dbo].[Author] (
-      [AuthorID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
+      [AuthorID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [Name] [NVARCHAR](255) NOT NULL
 )
 GO
@@ -67,7 +67,7 @@ GO
 PRINT '' PRINT '*** creating User table'
 GO
 CREATE TABLE [dbo].[User] (
-      [UserID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
+      [UserID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [FirstName] [NVARCHAR](255) NOT NULL
     , [LastName] [NVARCHAR](255) NOT NULL
     , [Email] [NVARCHAR](255) UNIQUE NOT NULL
@@ -80,7 +80,7 @@ GO
 PRINT '' PRINT '*** creating Role table'
 GO
 CREATE TABLE [dbo].[Role] (
-      [RoleID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
+      [RoleID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [Name] [NVARCHAR](100) NOT NULL UNIQUE
     , [Description] [NVARCHAR](255) NOT NULL UNIQUE
 )
@@ -101,7 +101,7 @@ GO
 PRINT '' PRINT '*** creating Transaction table'
 GO
 CREATE TABLE [dbo].[Transaction] (
-      [TransactionID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
+      [TransactionID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [UserID] [INT] NOT NULL
     , [TransactionType] [NVARCHAR](50) NOT NULL
 
@@ -112,7 +112,7 @@ GO
 PRINT '' PRINT '*** creating Copy table'
 GO
 CREATE TABLE [dbo].[Copy] (
-      [CopyID] [INT] IDENTITY (1000000, 1) NOT NULL PRIMARY KEY
+      [CopyID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [BookID] [INT] NOT NULL
     , [Condition] [NVARCHAR](255) NOT NULL
     , [Active] [BIT] NOT NULL DEFAULT 1
@@ -126,6 +126,7 @@ GO
 CREATE TABLE [dbo].[CopyTransaction] (
       [TransactionID] [INT] NOT NULL
     , [CopyID] [INT] NOT NULL
+	, [Active] [BIT] NOT NULL DEFAULT 1
 
     , CONSTRAINT [fk_CopyTransaction_TransactionID] FOREIGN KEY ([TransactionID]) REFERENCES [Transaction] ([TransactionID])
     , CONSTRAINT [fk_CopyTransaction_CopyID] FOREIGN KEY ([CopyID]) REFERENCES [Copy] ([CopyID])
@@ -159,13 +160,13 @@ GO
 INSERT INTO [dbo].[Book]
 	([GenreID], [PublisherID], [Name], [Description])
 VALUES
-	  (1000001, 1000001, 'Birds and Me', 'Learn about birds')
-    , (1000002, 1000002, 'Monty Python''s Big Red Book', 'Tis But A Scratch')
-    , (1000000, 1000000, 'Eat Yourself Smart', 'Get Smarter By Eating')
-    , (1000002, 1000000, 'Faster Than The Speed Of Love', 'Once you start, you can never stop reading')
-    , (1000001, 1000002, 'Around The World In 80 Buffets', 'I am the Bane of the All You Can Eat Buffet')
-    , (1000000, 1000001, 'My Horrible Father', 'My father is so horrible')
-    , (1000002, 1000001, 'The Big Goodbye', 'GOODBYE')
+	  (10001, 10001, 'Birds and Me', 'Learn about birds')
+    , (10002, 10002, 'Monty Python''s Big Red Book', 'Tis But A Scratch')
+    , (10000, 10000, 'Eat Yourself Smart', 'Get Smarter By Eating')
+    , (10002, 10000, 'Faster Than The Speed Of Love', 'Once you start, you can never stop reading')
+    , (10001, 10002, 'Around The World In 80 Buffets', 'I am the Bane of the All You Can Eat Buffet')
+    , (10000, 10001, 'My Horrible Father', 'My father is so horrible')
+    , (10002, 10001, 'The Big Goodbye', 'GOODBYE')
 GO
 
 PRINT '' PRINT '*** Populating Author Table'
@@ -184,13 +185,13 @@ GO
 INSERT INTO [dbo].[BookAuthor]
 	([BookID], [AuthorID])
 VALUES
-	  (1000000, 1000000)
-    , (1000001, 1000001)
-    , (1000002, 1000002)
-    , (1000003, 1000001)
-    , (1000004, 1000002)
-    , (1000005, 1000003)
-    , (1000006, 1000002)
+	  (10000, 10000)
+    , (10001, 10001)
+    , (10002, 10002)
+    , (10003, 10001)
+    , (10004, 10002)
+    , (10005, 10003)
+    , (10006, 10002)
 GO
 
 PRINT '' PRINT '*** Populating User Table'
@@ -206,7 +207,7 @@ GO
 
 UPDATE [User]
 SET [Active] = 0
-WHERE [UserID] = 1000003
+WHERE [UserID] = 10003
 GO
 
 PRINT '' PRINT '*** Populating Role Table'
@@ -224,10 +225,10 @@ GO
 INSERT INTO [dbo].[UserRole]
 	([UserID], [RoleID])
 VALUES
-	  (1000000, 1000000)
-    , (1000001, 1000001)
-    , (1000002, 1000002)
-    , (1000003, 1000002)
+	  (10000, 10000)
+    , (10001, 10001)
+    , (10002, 10002)
+    , (10003, 10002)
 GO
 
 PRINT '' PRINT '*** Populating Transaction Table'
@@ -235,10 +236,10 @@ GO
 INSERT INTO [dbo].[Transaction]
 	([UserID], [TransactionType])
 VALUES
-	  (1000002, 'Check Out')
-    , (1000002, 'Check In')
-    , (1000003, 'Check Out')
-    , (1000003, 'Check Out')
+	  (10002, 'CHECKOUT')
+    , (10002, 'CHECK IN')
+    , (10003, 'CHECKOUT')
+    , (10003, 'CHECK IN')
 GO
 
 PRINT '' PRINT '*** Populating Copy Table'
@@ -246,26 +247,26 @@ GO
 INSERT INTO [dbo].[Copy]
 	([BookID], [Condition], [Active])
 VALUES
-	  (1000000, 'Good', 1)
-    , (1000000, 'Spine Damage', 1)
-    , (1000000, 'Excellent', 0)
-    , (1000001, 'Missing Pages', 0)
-    , (1000002, 'Torn Cover', 1)
-    , (1000003, 'Good', 1)
-    , (1000005, 'Some Torn Pages', 1)
-    , (1000005, 'Poor', 1)
-    , (1000006, 'Good', 1)
+	  (10000, 'Good', 1)
+    , (10000, 'Spine Damage', 1)
+    , (10000, 'Excellent', 0)
+    , (10001, 'Missing Pages', 0)
+    , (10002, 'Torn Cover', 1)
+    , (10003, 'Good', 1)
+    , (10005, 'Some Torn Pages', 1)
+    , (10005, 'Poor', 1)
+    , (10006, 'Good', 1)
 GO
 
 PRINT '' PRINT '*** Populating CopyTransaction Table'
 GO
 INSERT INTO [dbo].[CopyTransaction]
-	([TransactionID], [CopyID])
+	([TransactionID], [CopyID], [Active])
 VALUES
-	  (1000000, 1000001)
-    , (1000001, 1000001)
-    , (1000002, 1000002)
-    , (1000003, 1000003)
+	  (10000, 10001, 1)
+    , (10001, 10001, 0)
+    , (10002, 10002, 1)
+    , (10003, 10003, 0)
 GO
 
 PRINT '' PRINT '*** Creating Procedure sp_select_roles_by_user_id'
@@ -357,7 +358,7 @@ AS
         INSERT INTO [dbo].[UserRole]
             (UserID, RoleID)
         VALUES
-            (@@IDENTITY, 1000000)
+            (@@IDENTITY, 10000)
 
     COMMIT TRANSACTION
 GO
@@ -780,6 +781,100 @@ AS
             , [GenreID]
             , [PublisherID]
 		FROM [Book]
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_insert_transaction'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_transaction]
+(
+	    @UserID INT
+	  , @TransactionType NVARCHAR(50)
+)
+AS
+	BEGIN
+	
+		INSERT INTO [dbo].[Transaction]
+			(UserID, TransactionType)
+		VALUES
+			(@UserID, 'CHECKOUT')
+			
+		SELECT SCOPE_IDENTITY()
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_checkout_book'
+GO
+CREATE PROCEDURE [dbo].[sp_checkout_book]
+(
+	  @CopyID INT
+	, @TransactionID INT
+)
+AS
+	BEGIN
+	
+		INSERT INTO [dbo].[CopyTransaction]
+			(CopyID, TransactionID, Active)
+		VALUES
+			(@CopyID, @TransactionID, 1)
+			
+		UPDATE [dbo].[Copy]
+		SET [Active] = 0
+		WHERE [CopyID] = @CopyID
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_checkin_book'
+GO
+CREATE PROCEDURE [dbo].[sp_checkin_book]
+(
+	@CopyID INT
+)
+AS
+	BEGIN
+	
+		UPDATE [dbo].[CopyTransaction]
+		SET [Active] = 0
+		WHERE 
+			[Active] = 1
+				AND
+			[CopyID] = @CopyID
+			
+		UPDATE [dbo].[Copy]
+		SET [Active] = 1
+		WHERE [CopyID] = @CopyID
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_checked_out_books_by_user_id'
+GO
+CREATE PROCEDURE [dbo].[sp_select_checked_out_books_by_user_id]
+(
+	@UserID INT
+)
+AS
+	BEGIN
+	
+		SELECT
+			  [Copy].[CopyID]
+			, [Copy].[BookID]
+			, [Copy].[Condition]
+			, [Book].[Name]
+		FROM [Copy]
+		JOIN [CopyTransaction] 
+			ON [Copy].[CopyID] = [CopyTransaction].[CopyID]
+		JOIN [Transaction] 
+			ON [CopyTransaction].[TransactionID] = [Transaction].[TransactionID]
+		JOIN [Book]
+			ON [Copy].[BookID] = [Book].[BookID]
+		WHERE 
+			[UserID] = @UserID
+				AND
+			[CopyTransaction].[Active] = 1
 	
 	END
 GO

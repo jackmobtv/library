@@ -30,8 +30,8 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Grid.Column="0">Title:</Label>
                 <Label Grid.Row="0" Grid.Column="1">Genre:</Label>
-                <TextBox Padding="0 2 0 2" x:Name="txtTitle" Width="150" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBox>
-                <TextBox Padding="0 2 0 2" x:Name="txtGenre" Width="100" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBox>
+                <TextBox Padding="0 2 0 2" MaxLength="255" x:Name="txtTitle" Width="150" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBox>
+                <TextBox Padding="0 2 0 2" MaxLength="100" x:Name="txtGenre" Width="100" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBox>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -44,11 +44,11 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Grid.Column="0">Author:</Label>
                 <Label Grid.Row="0" Grid.Column="1">Publisher:</Label>
-                <TextBox Padding="0 2 0 2" x:Name="txtAuthor" Width="150" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBox>
-                <TextBox Padding="0 2 0 2" x:Name="txtPublisher" Width="100" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBox>
+                <TextBox Padding="0 2 0 2" MaxLength="255" x:Name="txtAuthor" Width="150" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBox>
+                <TextBox Padding="0 2 0 2" MaxLength="255" x:Name="txtPublisher" Width="100" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" TextWrapping="Wrap"></TextBox>
             </Grid>
 
-            <TextBox x:Name="txtDescription" Grid.Row="2" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"></TextBox>
+            <TextBox x:Name="txtDescription" MaxLength="255" Grid.Row="2" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"></TextBox>
             <Button x:Name="btnConfirm" Padding="10 5 10 5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnConfirm_Click">Confirm</Button>
         </Grid>
         <Grid Grid.Column="1">

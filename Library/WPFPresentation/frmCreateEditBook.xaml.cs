@@ -252,7 +252,7 @@ namespace WPFPresentation
                             }
                             if (!yes)
                             {
-                                _bookManager.addBookAuthor(1000000, book.BookId);
+                                _bookManager.addBookAuthor(10001, book.BookId);
                                 _bookManager.addAuthor(_book.Author, book.BookId);
                             }
                         }

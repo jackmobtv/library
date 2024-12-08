@@ -17,7 +17,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">Condition</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtCondition" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"></TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1" MaxLength="255" x:Name="txtCondition" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"></TextBox>
 
         </Grid>
         <Grid Grid.Row="1">

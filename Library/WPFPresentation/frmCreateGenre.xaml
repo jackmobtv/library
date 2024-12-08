@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFPresentation"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="Genre" Height="150" Width="225" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0">Please Enter the Genre Descrption</Label>
-        <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="txtDescription" Width="200" Grid.Row="1" Padding="0 2 0 2"></TextBox>
+        <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" MaxLength="255" x:Name="txtDescription" Width="200" Grid.Row="1" Padding="0 2 0 2"></TextBox>
         <Button VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="btnConfirm" Padding="10 5 10 5" Grid.Row="2" Click="btnConfirm_Click">Confirm</Button>
     </Grid>
 </Window>

@@ -22,6 +22,7 @@ namespace WPFPresentation
         private UserVM _accesskey = null;
         private BookManager _bookManager = new BookManager();
         private UserManager _userManager = new UserManager();
+        private TransactionManager _transactionManager = new TransactionManager();
         private List<Copy> _cart = new List<Copy>();
         private TabController _tab = new TabController();
         public MainWindow()
@@ -288,6 +289,7 @@ namespace WPFPresentation
                         _tab.Admin = false;
                         if (!_tab.CheckedOutList)
                         {
+                            populateCheckedOutList();
                             _tab.CheckedOutList = true;
                         }
                         break;
@@ -345,6 +347,27 @@ namespace WPFPresentation
                 var confirm = MessageBox.Show("Check Out?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
                 if (confirm == MessageBoxResult.Yes)
                 {
+                    try
+                    {
+                        List<Transaction> transactions = new List<Transaction>();
+                        foreach (var copy in _cart)
+                        {
+                            transactions.Add(new Transaction()
+                            {
+                                UserId = _accesskey.UserId,
+                                TransactionType = "CHECKOUT",
+                                CopyId = copy.CopyId,
+                                Active = false
+                            });
+                        }
+                        _transactionManager.checkoutBook(transactions);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
                     _cart.Clear();
                     populateCheckoutList();
                 }
@@ -423,6 +446,53 @@ namespace WPFPresentation
         private void tabBookManagement_Loaded(object sender, RoutedEventArgs e)
         {
             populateBookManagement();
+        }
+
+        private void populateCheckedOutList()
+        {
+            List<CopyVM> copies = new List<CopyVM>();
+
+            try
+            {
+                copies = _transactionManager.getCheckedOutCopies(_accesskey.UserId);
+
+                grdCheckedOutList.ItemsSource = copies;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void grdCheckedOutList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var copy = grdCheckedOutList.SelectedItem as CopyVM;
+            if (copy != null)
+            {
+                var confirm = MessageBox.Show("Check Book In?", "", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        Transaction transaction = new Transaction()
+                        {
+                            UserId = _accesskey.UserId,
+                            TransactionType = "CHECKOUT",
+                            CopyId = copy.CopyId,
+                            Active = false
+                        };
+
+                        _transactionManager.checkinBook(transaction);
+
+                        populateCheckedOutList();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+            }
         }
     }
 }
