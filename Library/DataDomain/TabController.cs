@@ -13,6 +13,5 @@ namespace DataDomain
         public bool CheckedOutList { get; set; } = false;
         public bool MemberList { get; set; } = false;
         public bool BookManagement { get; set; } = false;
-        public bool Admin { get; set; } = false;
     }
 }

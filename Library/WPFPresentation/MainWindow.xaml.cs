@@ -67,7 +67,6 @@ namespace WPFPresentation
                                 tabCheckoutList.Visibility = Visibility.Visible;
                                 tabMemberList.Visibility = Visibility.Visible;
                                 tabBookManagement.Visibility = Visibility.Visible;
-                                tabAdmin.Visibility = Visibility.Visible;
                                 break;
                             default:
                                 break;
@@ -111,7 +110,6 @@ namespace WPFPresentation
             tabCheckoutList.Visibility = Visibility.Hidden;
             tabMemberList.Visibility = Visibility.Hidden;
             tabBookManagement.Visibility = Visibility.Hidden;
-            tabAdmin.Visibility = Visibility.Hidden;
         }
 
         private void logoutUser()
@@ -250,7 +248,6 @@ namespace WPFPresentation
                         _tab.CheckedOutList = false;
                         _tab.MemberList = false;
                         _tab.BookManagement = false;
-                        _tab.Admin = false;
                         if (!_tab.CheckoutList)
                         {
                             populateCheckoutList();
@@ -262,7 +259,6 @@ namespace WPFPresentation
                         _tab.CheckedOutList = false;
                         _tab.MemberList = false;
                         _tab.BookManagement = false;
-                        _tab.Admin = false;
                         if (!_tab.BookList)
                         {
                             populateBookList();
@@ -274,7 +270,6 @@ namespace WPFPresentation
                         _tab.CheckoutList = false;
                         _tab.CheckedOutList = false;
                         _tab.BookManagement = false;
-                        _tab.Admin = false;
                         if (!_tab.MemberList)
                         {
                             populateMemberList();
@@ -286,7 +281,6 @@ namespace WPFPresentation
                         _tab.CheckoutList = false;
                         _tab.MemberList = false;
                         _tab.BookManagement = false;
-                        _tab.Admin = false;
                         if (!_tab.CheckedOutList)
                         {
                             populateCheckedOutList();
@@ -298,22 +292,10 @@ namespace WPFPresentation
                         _tab.CheckoutList = false;
                         _tab.CheckedOutList = false;
                         _tab.MemberList = false;
-                        _tab.Admin = false;
                         if (!_tab.BookManagement)
                         {
                             _tab.BookManagement = true;
                             populateBookManagement();
-                        }
-                        break;
-                    case "Admin":
-                        _tab.BookList = false;
-                        _tab.CheckoutList = false;
-                        _tab.CheckedOutList = false;
-                        _tab.MemberList = false;
-                        _tab.BookManagement = false;
-                        if (!_tab.Admin)
-                        {
-                            _tab.Admin = true;
                         }
                         break;
                 }
@@ -477,7 +459,7 @@ namespace WPFPresentation
                         Transaction transaction = new Transaction()
                         {
                             UserId = _accesskey.UserId,
-                            TransactionType = "CHECKOUT",
+                            TransactionType = "CHECK IN",
                             CopyId = copy.CopyId,
                             Active = false
                         };
@@ -492,6 +474,16 @@ namespace WPFPresentation
                         return;
                     }
                 }
+            }
+        }
+
+        private void grdMemberList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var user = grdMemberList.SelectedItem as User;
+            if (user != null)
+            {
+                new frmViewUserHistory(user).ShowDialog();
+                populateMemberList();
             }
         }
     }

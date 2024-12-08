@@ -15,5 +15,7 @@ namespace DataAccessInterfaces
         public void updateUser(string firstName, string lastName, string old_email, string new_email, string old_passwordHash, string new_passwordHash);
         public void insertUser(string firstName, string lastName, string email, string passwordHash);
         public List<UserVM> selectAllUsers();
+        public void deactivateUser(int userId);
+        public void activateUser(int userId);
     }
 }

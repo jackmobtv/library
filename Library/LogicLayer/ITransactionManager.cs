@@ -13,5 +13,7 @@ namespace LogicLayer
         public int addTransaction(int userId, string transactionType);
         public void checkoutBook(List<Transaction> transactions);
         public void checkinBook(Transaction transaction);
+        public List<Transaction> getTransactionsByUserId(int userId);
+        public List<CopyVM> getCopiesByTransactionId(int transactionId);
     }
 }

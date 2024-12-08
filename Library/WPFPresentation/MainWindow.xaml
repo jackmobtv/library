@@ -58,7 +58,7 @@
             </TabItem>
             <TabItem x:Name="tabMemberList" Header="Member List" Loaded="tabMemberList_Loaded">
                 <Grid>
-                    <DataGrid Grid.Row="0" x:Name="grdMemberList" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False">
+                    <DataGrid Grid.Row="0" x:Name="grdMemberList" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="grdMemberList_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="230"/>
                             <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="300"/>
@@ -90,9 +90,6 @@
                         <Button Grid.Column="1" FontSize="30" Height="50" Width="200" Margin="20 0 0 0" x:Name="btnUpdateBook" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnUpdateBook_Click">Update Book</Button>
                     </Grid>
                 </Grid>
-            </TabItem>
-            <TabItem x:Name="tabAdmin" Header="Admin">
-                <Label Content="This is the Admin Tab"/>
             </TabItem>
         </TabControl>
 

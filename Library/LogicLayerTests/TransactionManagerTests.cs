@@ -75,5 +75,29 @@ namespace LogicLayerTests
 
             _transactionManager.checkoutBook(transaction);
         }
+
+        [TestMethod]
+        public void testGetTransactionsByUserId()
+        {
+            int expectedValue = 2;
+            int id = 100000;
+            int actualValue;
+
+            actualValue = _transactionManager.getTransactionsByUserId(id).Count;
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [TestMethod]
+        public void testGetCopiesByTransactionId()
+        {
+            int id = 100000;
+            int expectedValue = 1;
+            int actualValue;
+
+            actualValue = _transactionManager.getCopiesByTransactionId(id).Count;
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
     }
 }

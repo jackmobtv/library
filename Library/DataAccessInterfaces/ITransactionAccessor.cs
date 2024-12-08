@@ -13,5 +13,7 @@ namespace DataAccessInterfaces
         public int insertTransaction(int userId, string transactionType);
         public void checkoutBook(Transaction transaction);
         public void checkinBook(Transaction transaction);
+        public List<Transaction> selectTransactionsByUserId(int userId);
+        public List<CopyVM> selectCopiesByTransactionId(int transactionId);
     }
 }

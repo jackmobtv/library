@@ -75,5 +75,29 @@ namespace LogicLayer
                 throw ex;
             }
         }
+
+        public List<CopyVM> getCopiesByTransactionId(int transactionId)
+        {
+            try
+            {
+                return _transactionAccessor.selectCopiesByTransactionId(transactionId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Transaction> getTransactionsByUserId(int userId)
+        {
+            try
+            {
+                return _transactionAccessor.selectTransactionsByUserId(userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

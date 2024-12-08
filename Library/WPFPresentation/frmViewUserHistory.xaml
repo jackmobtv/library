@@ -1,0 +1,40 @@
+﻿<Window x:Class="WPFPresentation.frmViewUserHistory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFPresentation"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="User History" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid Grid.Column="0" x:Name="grdCheckoutList" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding CopyId}" Width="20"/>
+                    <DataGridTextColumn Header="Title" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Condition" Binding="{Binding Condition}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid Grid.Column="1" x:Name="grdTransactionList" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="grdTransactionList_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding TransactionId}" Width="100"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding TransactionType}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Button Grid.Row="1" FontSize="30" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="btnDeactivate" Click="btnDeactivate_Click">Deactivate</Button>
+    </Grid>
+</Window>

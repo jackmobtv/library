@@ -134,5 +134,83 @@ namespace DataAccessLayer
 
             return copies;
         }
+
+        public List<CopyVM> selectCopiesByTransactionId(int transactionId)
+        {
+            List<CopyVM> copies = new List<CopyVM>();
+
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_select_copies_by_transaction_id", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@TransactionID", SqlDbType.Int);
+
+            cmd.Parameters[0].Value = transactionId;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    copies.Add(new CopyVM()
+                    {
+                        CopyId= reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Condition = reader.GetString(2)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return copies;
+        }
+
+        public List<Transaction> selectTransactionsByUserId(int userId)
+        {
+            List<Transaction> transactions = new List<Transaction>();
+
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_select_transactions_by_user_id", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+
+            cmd.Parameters[0].Value = userId;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    transactions.Add(new Transaction()
+                    {
+                        TransactionId = reader.GetInt32(0),
+                        UserId = reader.GetInt32(1),
+                        TransactionType = reader.GetString(2),
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return transactions;
+        }
     }
 }

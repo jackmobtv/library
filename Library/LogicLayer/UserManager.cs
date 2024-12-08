@@ -184,5 +184,29 @@ namespace LogicLayer
             }
             return users;
         }
+
+        public void deactivateUser(int userId)
+        {
+            try
+            {
+                _userAccessor.deactivateUser(userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void activateUser(int userId)
+        {
+            try
+            {
+                _userAccessor.activateUser(userId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -152,5 +152,29 @@ namespace DataAccessFakes
         {
             return _users;
         }
+
+        public void deactivateUser(int userId)
+        {
+            foreach (var user in _users)
+            {
+                if(user.UserId == userId)
+                {
+                    user.Active = false;
+                    break;
+                }
+            }
+        }
+
+        public void activateUser(int userId)
+        {
+            foreach (var user in _users)
+            {
+                if (user.UserId == userId)
+                {
+                    user.Active = true;
+                    break;
+                }
+            }
+        }
     }
 }

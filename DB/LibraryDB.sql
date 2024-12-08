@@ -279,7 +279,7 @@ AS
 	BEGIN
 
 		SELECT
-			[Role].[Name]
+			  [Role].[Name]
 		FROM [UserRole]
 		JOIN [Role]
 		ON [UserRole].[RoleID] = [Role].[RoleID]
@@ -875,6 +875,81 @@ AS
 			[UserID] = @UserID
 				AND
 			[CopyTransaction].[Active] = 1
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_transactions_by_user_id'
+GO
+CREATE PROCEDURE [dbo].[sp_select_transactions_by_user_id]
+(
+	@UserID INT
+)
+AS
+	BEGIN
+	
+		SELECT
+			  [TransactionID]
+			, [UserID]
+			, [TransactionType]
+		FROM [Transaction]
+		WHERE 
+			[UserID] = @UserID
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_copies_by_transaction_id'
+GO
+CREATE PROCEDURE [dbo].[sp_select_copies_by_transaction_id]
+(
+	@TransactionID INT
+)
+AS
+	BEGIN
+	
+		SELECT
+			  [CopyTransaction].[CopyID]
+			, [Name]
+			, [Condition]
+		FROM [CopyTransaction]
+		JOIN [Copy] 
+			ON [CopyTransaction].[CopyID] = [Copy].[CopyID]
+		JOIN [Book]
+			ON [Copy].[BookID] = [Book].[BookID]
+		WHERE [TransactionID] = @TransactionID
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_deactivate_user'
+GO
+CREATE PROCEDURE [dbo].[sp_deactivate_user]
+(
+	@UserID INT
+)
+AS
+	BEGIN
+	
+		UPDATE [dbo].[User]
+		SET [Active] = 0
+		WHERE [UserID] = @UserID
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_activate_user'
+GO
+CREATE PROCEDURE [dbo].[sp_activate_user]
+(
+	@UserID INT
+)
+AS
+	BEGIN
+	
+		UPDATE [dbo].[User]
+		SET [Active] = 1
+		WHERE [UserID] = @UserID
 	
 	END
 GO

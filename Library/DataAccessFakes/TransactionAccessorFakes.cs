@@ -119,5 +119,39 @@ namespace DataAccessFakes
 
             return copies;
         }
+
+        public List<CopyVM> selectCopiesByTransactionId(int transactionId)
+        {
+            List<CopyVM> copies = new List<CopyVM>();
+            foreach(var transaction in _transactions)
+            {
+                if (transaction.TransactionId == transactionId)
+                {
+                    foreach (var copy in _copies)
+                    {
+                        if(copy.CopyId == transaction.CopyId)
+                        {
+                            copies.Add(copy);
+                        }
+                    }
+                }
+            }
+            return copies;
+        }
+
+        public List<Transaction> selectTransactionsByUserId(int userId)
+        {
+            List<Transaction> transactionList = new List<Transaction>();
+
+            foreach (var transaction in _transactions)
+            {
+                if(transaction.UserId == userId)
+                {
+                    transactionList.Add(transaction);
+                }
+            }
+
+            return transactionList;
+        }
     }
 }

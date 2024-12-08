@@ -248,5 +248,55 @@ namespace DataAccessLayer
 
             return users;
         }
+
+        public void deactivateUser(int userId)
+        {
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_deactivate_user", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+
+            cmd.Parameters[0].Value = userId;
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public void activateUser(int userId)
+        {
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_activate_user", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@UserID", SqlDbType.Int);
+
+            cmd.Parameters[0].Value = userId;
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

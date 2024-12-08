@@ -156,5 +156,14 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedValue, actualValue);
         }
+
+        [TestMethod]
+        public void testActivateAndDeactivateUser()
+        {
+            const int id = 100000;
+
+            _userManager.deactivateUser(id);
+            _userManager.activateUser(id);
+        }
     }
 }
