@@ -37,7 +37,8 @@ namespace LogicLayer
         {
             try
             {
-                _transactionAccessor.insertTransaction(transaction.UserId, transaction.TransactionType);
+                int id = _transactionAccessor.insertTransaction(transaction.UserId, transaction.TransactionType);
+                transaction.TransactionId = id;
                 _transactionAccessor.checkinBook(transaction);
             }
             catch (Exception ex)

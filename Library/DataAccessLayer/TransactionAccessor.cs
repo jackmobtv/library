@@ -19,8 +19,10 @@ namespace DataAccessLayer
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.Add("@CopyID", SqlDbType.Int);
+            cmd.Parameters.Add("@TransactionID", SqlDbType.Int);
 
             cmd.Parameters[0].Value = transaction.CopyId;
+            cmd.Parameters[1].Value = transaction.TransactionId;
 
             try
             {
@@ -198,6 +200,7 @@ namespace DataAccessLayer
                         TransactionId = reader.GetInt32(0),
                         UserId = reader.GetInt32(1),
                         TransactionType = reader.GetString(2),
+                        TransactionDate = reader.GetDateTime(3)
                     });
                 }
             }

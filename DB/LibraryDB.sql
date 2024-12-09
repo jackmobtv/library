@@ -104,6 +104,7 @@ CREATE TABLE [dbo].[Transaction] (
       [TransactionID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [UserID] [INT] NOT NULL
     , [TransactionType] [NVARCHAR](50) NOT NULL
+	, [TransactionDate] [DATETIME] NOT NULL
 
     , CONSTRAINT [fk_Transaction_UserID] FOREIGN KEY ([UserID]) REFERENCES [User] ([UserID])
 )
@@ -234,12 +235,12 @@ GO
 PRINT '' PRINT '*** Populating Transaction Table'
 GO
 INSERT INTO [dbo].[Transaction]
-	([UserID], [TransactionType])
+	([UserID], [TransactionType], [TransactionDate])
 VALUES
-	  (10002, 'CHECKOUT')
-    , (10002, 'CHECK IN')
-    , (10003, 'CHECKOUT')
-    , (10003, 'CHECK IN')
+	  (10002, 'CHECKOUT', GETDATE())
+    , (10002, 'CHECK IN', GETDATE())
+    , (10003, 'CHECKOUT', GETDATE())
+    , (10003, 'CHECK IN', GETDATE())
 GO
 
 PRINT '' PRINT '*** Populating Copy Table'
@@ -263,7 +264,7 @@ GO
 INSERT INTO [dbo].[CopyTransaction]
 	([TransactionID], [CopyID], [Active])
 VALUES
-	  (10000, 10001, 1)
+	  (10000, 10001, 0)
     , (10001, 10001, 0)
     , (10002, 10002, 1)
     , (10003, 10003, 0)
@@ -796,9 +797,9 @@ AS
 	BEGIN
 	
 		INSERT INTO [dbo].[Transaction]
-			(UserID, TransactionType)
+			(UserID, TransactionType, TransactionDate)
 		VALUES
-			(@UserID, 'CHECKOUT')
+			(@UserID, @TransactionType, GETDATE())
 			
 		SELECT SCOPE_IDENTITY()
 	
@@ -831,10 +832,16 @@ PRINT '' PRINT '*** Creating Procedure sp_checkin_book'
 GO
 CREATE PROCEDURE [dbo].[sp_checkin_book]
 (
-	@CopyID INT
+	  @CopyID INT
+	, @TransactionID INT
 )
 AS
 	BEGIN
+	
+		INSERT INTO [dbo].[CopyTransaction]
+			(CopyID, TransactionID, Active)
+		VALUES
+			(@CopyID, @TransactionID, 0)
 	
 		UPDATE [dbo].[CopyTransaction]
 		SET [Active] = 0
@@ -892,6 +899,7 @@ AS
 			  [TransactionID]
 			, [UserID]
 			, [TransactionType]
+			, [TransactionDate]
 		FROM [Transaction]
 		WHERE 
 			[UserID] = @UserID

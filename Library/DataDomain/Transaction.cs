@@ -13,5 +13,6 @@ namespace DataDomain
         public string TransactionType { get; set; }
         public int CopyId { get; set; }
         public bool Active { get; set; }
+        public DateTime TransactionDate { get; set; }
     }
 }

@@ -29,8 +29,9 @@
 
             <DataGrid Grid.Column="1" x:Name="grdTransactionList" SelectionMode="Single" IsReadOnly="True" AutoGenerateColumns="False" MouseDoubleClick="grdTransactionList_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding TransactionId}" Width="100"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding TransactionId}" Width="50"/>
                     <DataGridTextColumn Header="Type" Binding="{Binding TransactionType}" Width="*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding TransactionDate}" Width="130"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
