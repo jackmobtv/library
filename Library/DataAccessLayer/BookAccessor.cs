@@ -425,9 +425,12 @@ namespace DataAccessLayer
                         BookId = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
-                        GenreId = reader.GetInt32(3),
-                        AuthorId = reader.GetInt32(4),
-                        PublisherId = reader.GetInt32(5)
+                        Genre = reader.GetString(3),
+                        Author = reader.GetString(4),
+                        Publisher = reader.GetString(5),
+                        GenreId = reader.GetInt32(6),
+                        AuthorId = reader.GetInt32(7),
+                        PublisherId = reader.GetInt32(8)
                     };
                 }
             }

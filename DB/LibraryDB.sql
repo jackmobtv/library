@@ -682,14 +682,23 @@ AS
 	
 		SELECT
 			  [Book].[BookID]
-            , [Name]
-            , [Description]
-            , [GenreID]
-            , [AuthorID]
-            , [PublisherID]
+            , [Book].[Name]
+            , [Book].[Description]
+			, [Genre].[Name]
+			, [Author].[Name]
+			, [Publisher].[Name]
+            , [Book].[GenreID]
+            , [BookAuthor].[AuthorID]
+            , [Book].[PublisherID]
 		FROM [Book]
 		JOIN [BookAuthor]
 			ON [Book].[BookID] = [BookAuthor].[BookID]
+		JOIN [Author]
+			ON [Author].[AuthorID] = [BookAuthor].[AuthorID]
+		JOIN [Genre]
+			ON [Book].[GenreID] = [Genre].[GenreID]
+		JOIN [Publisher]
+			ON [Book].[PublisherID] = [Publisher].[PublisherID]
 		WHERE [Book].[BookID] = @BookID
 	
 	END

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f1487279-a0aa-43e8-9956-8cf605289f8d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/DataAccessFakes/BookAccessorFakes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessFakes/BookAccessorFakes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccessFakes/TransactionAccessorFakes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessFakes/TransactionAccessorFakes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccessFakes/UserAccessorFakes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessFakes/UserAccessorFakes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccessInterfaces/ITransactionAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessInterfaces/ITransactionAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccessLayer/BookAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessLayer/BookAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccessLayer/TransactionAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessLayer/TransactionAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccessLayer/UserAccessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessLayer/UserAccessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataDomain/Author.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataDomain/Author.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataDomain/Genre.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataDomain/Genre.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataDomain/Publisher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataDomain/Publisher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataDomain/TabController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataDomain/TabController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataDomain/Transaction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataDomain/Transaction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicLayer/BookManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicLayer/BookManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicLayer/ITransactionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicLayer/ITransactionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicLayer/TransactionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicLayer/TransactionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicLayer/UserManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicLayer/UserManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicLayerTests/BookManagerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicLayerTests/BookManagerTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicLayerTests/TransactionManagerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicLayerTests/TransactionManagerTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicLayerTests/UserManagerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicLayerTests/UserManagerTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmCreateEditBook.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmCreateEditBook.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmCreateEditBook.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmCreateEditBook.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmCreateEditDeactivateCopy.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmCreateEditDeactivateCopy.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmCreateEditDeactivateCopy.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmCreateEditDeactivateCopy.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmCreateGenre.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmCreateGenre.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmCreateGenre.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmCreateGenre.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmViewTransaction.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmViewTransaction.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmViewTransaction.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmViewTransaction.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmViewUserHistory.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmViewUserHistory.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WPFPresentation/frmViewUserHistory.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WPFPresentation/frmViewUserHistory.xaml.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2sNXdFw9ibcVfw7BoS5VGO4fBKk" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f1487279-a0aa-43e8-9956-8cf605289f8d" name="Changes" comment="" />
+      <created>1738297110348</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1738297110348</updated>
+      <workItem from="1738297110361" duration="38000" />
+    </task>
+    <servers />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

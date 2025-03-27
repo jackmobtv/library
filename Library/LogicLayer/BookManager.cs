@@ -196,7 +196,14 @@ namespace LogicLayer
 
         public List<Book> getBookTable()
         {
-            return _bookAccessor.selectBookTable();
+            try
+            {
+                return _bookAccessor.selectBookTable();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<Copy> getCopiesByBookId(int bookId)

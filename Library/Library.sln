@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicLayerTests", "LogicLay
 		{D167CDA5-2E27-4C5A-B2EB-FDA41FBAAE93} = {D167CDA5-2E27-4C5A-B2EB-FDA41FBAAE93}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPresentation", "WebPresentation\WebPresentation.csproj", "{07E75ED3-EC8B-41D2-A7E6-A21537DF9395}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{7CCE8C50-9256-420D-8474-0648535B2523}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CCE8C50-9256-420D-8474-0648535B2523}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CCE8C50-9256-420D-8474-0648535B2523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07E75ED3-EC8B-41D2-A7E6-A21537DF9395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07E75ED3-EC8B-41D2-A7E6-A21537DF9395}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07E75ED3-EC8B-41D2-A7E6-A21537DF9395}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07E75ED3-EC8B-41D2-A7E6-A21537DF9395}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
