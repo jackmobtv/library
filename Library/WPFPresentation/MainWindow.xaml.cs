@@ -156,7 +156,7 @@ namespace WPFPresentation
             {
                 try
                 {
-                    copies = _bookManager.getCopiesByBookId(book.BookId);
+                    copies = _bookManager.getCopiesByBookId(book.BookID);
                 }
                 catch (Exception ex)
                 {
@@ -177,7 +177,7 @@ namespace WPFPresentation
                         bool exists = false;
                         foreach (var copy in _cart)
                         {
-                            if (frm.selectedCopy.CopyId == copy.CopyId)
+                            if (frm.selectedCopy.CopyID == copy.CopyID)
                             {
                                 MessageBox.Show("Selected Copy is Already in Checkout List", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                                 exists = true;
@@ -207,7 +207,7 @@ namespace WPFPresentation
                     string title = "UNKNOWN";
                     foreach (var book in books)
                     {
-                        if (book.BookId == _cart[i].BookId)
+                        if (book.BookID == _cart[i].BookId)
                         {
                             title = book.Name;
                             break;
@@ -215,7 +215,7 @@ namespace WPFPresentation
                     }
                     cart.Add(new CopyVM
                     {
-                        CopyId = _cart[i].CopyId,
+                        CopyID = _cart[i].CopyID,
                         Name = title,
                         Condition = _cart[i].Condition
                     });
@@ -312,7 +312,7 @@ namespace WPFPresentation
                 {
                     for (int i = 0; i < _cart.Count(); i++)
                     {
-                        if (copy.CopyId == _cart[i].CopyId)
+                        if (copy.CopyID == _cart[i].CopyID)
                         {
                             _cart.RemoveAt(i);
                         }
@@ -336,9 +336,9 @@ namespace WPFPresentation
                         {
                             transactions.Add(new Transaction()
                             {
-                                UserId = _accesskey.UserId,
+                                UserId = _accesskey.UserID,
                                 TransactionType = "CHECKOUT",
-                                CopyId = copy.CopyId,
+                                CopyId = copy.CopyID,
                                 Active = false
                             });
                         }
@@ -436,7 +436,7 @@ namespace WPFPresentation
 
             try
             {
-                copies = _transactionManager.getCheckedOutCopies(_accesskey.UserId);
+                copies = _transactionManager.getCheckedOutCopies(_accesskey.UserID);
 
                 grdCheckedOutList.ItemsSource = copies;
             }
@@ -458,9 +458,9 @@ namespace WPFPresentation
                     {
                         Transaction transaction = new Transaction()
                         {
-                            UserId = _accesskey.UserId,
+                            UserId = _accesskey.UserID,
                             TransactionType = "CHECK IN",
-                            CopyId = copy.CopyId,
+                            CopyId = copy.CopyID,
                             Active = false
                         };
 

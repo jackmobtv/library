@@ -22,7 +22,7 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@TransactionID", SqlDbType.Int);
 
             cmd.Parameters[0].Value = transaction.CopyId;
-            cmd.Parameters[1].Value = transaction.TransactionId;
+            cmd.Parameters[1].Value = transaction.TransactionID;
 
             try
             {
@@ -49,7 +49,7 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@TransactionID", SqlDbType.Int);
 
             cmd.Parameters[0].Value = transaction.CopyId;
-            cmd.Parameters[1].Value = transaction.TransactionId;
+            cmd.Parameters[1].Value = transaction.TransactionID;
 
             try
             {
@@ -117,7 +117,7 @@ namespace DataAccessLayer
                 {
                     copies.Add(new CopyVM()
                     {
-                        CopyId = reader.GetInt32(0),
+                        CopyID = reader.GetInt32(0),
                         BookId = reader.GetInt32(1),
                         Condition = reader.GetString(2),
                         Name = reader.GetString(3),
@@ -158,7 +158,7 @@ namespace DataAccessLayer
                 {
                     copies.Add(new CopyVM()
                     {
-                        CopyId= reader.GetInt32(0),
+                        CopyID= reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Condition = reader.GetString(2)
                     });
@@ -197,7 +197,7 @@ namespace DataAccessLayer
                 {
                     transactions.Add(new Transaction()
                     {
-                        TransactionId = reader.GetInt32(0),
+                        TransactionID = reader.GetInt32(0),
                         UserId = reader.GetInt32(1),
                         TransactionType = reader.GetString(2),
                         TransactionDate = reader.GetDateTime(3)

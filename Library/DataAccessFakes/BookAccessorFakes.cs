@@ -26,7 +26,7 @@ namespace DataAccessFakes
 
             _books.Add(new Book()
             {
-                BookId = 100000,
+                BookID = 100000,
                 Name = "Tubas and Company",
                 Description = "Holiday Tubas",
                 Genre = "Horror",
@@ -36,21 +36,21 @@ namespace DataAccessFakes
 
             _copies.Add(new Copy()
             {
-                CopyId = 100000,
+                CopyID = 100000,
                 BookId = 100000,
                 Condition = "Good",
                 Active = true
             });
             _copies.Add(new Copy()
             {
-                CopyId = 100001,
+                CopyID = 100001,
                 BookId = 100000,
                 Condition = "Bad",
                 Active = false
             });
             _copies.Add(new Copy()
             {
-                CopyId = 100002,
+                CopyID = 100002,
                 BookId = 100000,
                 Condition = "Torn Cover",
                 Active = true
@@ -58,7 +58,7 @@ namespace DataAccessFakes
 
             _books.Add(new Book()
             {
-                BookId = 100001,
+                BookID = 100001,
                 Name = "Macrohard",
                 Description = "The Story of Windows ME",
                 Genre = "Biography",
@@ -68,7 +68,7 @@ namespace DataAccessFakes
 
             _copies.Add(new Copy()
             {
-                CopyId = 100003,
+                CopyID = 100003,
                 BookId = 100001,
                 Condition = "Excellent",
                 Active = true
@@ -76,7 +76,7 @@ namespace DataAccessFakes
 
             _books.Add(new Book()
             {
-                BookId = 100002,
+                BookID = 100002,
                 Name = "Die Hard: The Movie The Novel The Movie The Novel",
                 Description = "Dying Hard or Hardly Dying",
                 Genre = "Non-Fiction",
@@ -106,17 +106,17 @@ namespace DataAccessFakes
 
             _authors.Add(new Author()
             {
-                AuthorId = 1000000,
+                AuthorID = 1000000,
                 Name = "Author1"
             });
             _authors.Add(new Author()
             {
-                AuthorId = 1000001,
+                AuthorID = 1000001,
                 Name = "Author2"
             });
             _authors.Add(new Author()
             {
-                AuthorId = 1000002,
+                AuthorID = 1000002,
                 Name = "Author3"
             });
         }
@@ -125,7 +125,7 @@ namespace DataAccessFakes
         {
             foreach (var copy in _copies)
             {
-                if (copy.CopyId == copyId)
+                if (copy.CopyID == copyId)
                 {
                     copy.Active = true;
                     return;
@@ -138,7 +138,7 @@ namespace DataAccessFakes
         {
             foreach (var copy in _copies)
             {
-                if(copy.CopyId == copyId)
+                if(copy.CopyID == copyId)
                 {
                     copy.Active = false;
                     return;
@@ -209,7 +209,7 @@ namespace DataAccessFakes
         {
             foreach (var book in _books)
             {
-                if(book.BookId == bookId)
+                if(book.BookID == bookId)
                 {
                     return book;
                 }
@@ -236,7 +236,7 @@ namespace DataAccessFakes
         {
             foreach (var copy in _copies)
             {
-                if (copy.CopyId == copyId)
+                if (copy.CopyID == copyId)
                 {
                     return copy;
                 }
@@ -248,7 +248,7 @@ namespace DataAccessFakes
         {
             for (int i = 0; i < _authors.Count; i++)
             {
-                if (_authors[i].AuthorId == authorId)
+                if (_authors[i].AuthorID == authorId)
                 {
                     return;
                 }
@@ -260,7 +260,7 @@ namespace DataAccessFakes
         {
             for (int i = 0; i < _books.Count; i++)
             {
-                if (_books[i].BookId == oldBook.BookId)
+                if (_books[i].BookID == oldBook.BookID)
                 {
                     _books[i] = book;
                     return;
@@ -273,7 +273,7 @@ namespace DataAccessFakes
         {
             for (int i = 0; i < _copies.Count; i++)
             {
-                if (_copies[i].CopyId == oldCopy.CopyId)
+                if (_copies[i].CopyID == oldCopy.CopyID)
                 {
                     _copies[i] = copy;
                     return;

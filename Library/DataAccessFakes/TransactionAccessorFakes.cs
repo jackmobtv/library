@@ -20,7 +20,7 @@ namespace DataAccessFakes
 
             _transactions.Add(new Transaction()
             {
-                TransactionId = 100000,
+                TransactionID = 100000,
                 TransactionType = "CHECKIN",
                 UserId = 100000,
                 Active = true,
@@ -28,7 +28,7 @@ namespace DataAccessFakes
             });
             _transactions.Add(new Transaction()
             {
-                TransactionId = 100001,
+                TransactionID = 100001,
                 TransactionType = "CHECKIN",
                 UserId = 100000,
                 Active = true,
@@ -36,7 +36,7 @@ namespace DataAccessFakes
             });
             _transactions.Add(new Transaction()
             {
-                TransactionId = 100002,
+                TransactionID = 100002,
                 TransactionType = "CHECKOUT",
                 UserId = 100002,
                 Active = false,
@@ -45,21 +45,21 @@ namespace DataAccessFakes
 
             _copies.Add(new CopyVM()
             {
-                CopyId = 100000,
+                CopyID = 100000,
                 BookId = 100000,
                 Condition = "Good",
                 Active = true
             });
             _copies.Add(new CopyVM()
             {
-                CopyId = 100001,
+                CopyID = 100001,
                 BookId = 100000,
                 Condition = "Bad",
                 Active = false
             });
             _copies.Add(new CopyVM()
             {
-                CopyId = 100002,
+                CopyID = 100002,
                 BookId = 100000,
                 Condition = "Torn Cover",
                 Active = true
@@ -70,7 +70,7 @@ namespace DataAccessFakes
         {
             foreach (var copy in _copies)
             {
-                if (copy.CopyId == transaction.CopyId)
+                if (copy.CopyID == transaction.CopyId)
                 {
                     copy.Active = true;
                 }
@@ -81,7 +81,7 @@ namespace DataAccessFakes
         {
             foreach (var copy in _copies)
             {
-                if (copy.CopyId == transaction.CopyId)
+                if (copy.CopyID == transaction.CopyId)
                 {
                     copy.Active = false;
                 }
@@ -93,10 +93,10 @@ namespace DataAccessFakes
             Transaction transaction = new Transaction() { 
                 UserId = userId, 
                 TransactionType = transactionType,
-                TransactionId = 100000
+                TransactionID = 100000
             };
             _transactions.Add(transaction);
-            return transaction.TransactionId;
+            return transaction.TransactionID;
         }
 
         public List<CopyVM> selectCheckedOutCopies(int userId)
@@ -109,7 +109,7 @@ namespace DataAccessFakes
                 {
                     foreach (var copy in _copies)
                     {
-                        if(copy.CopyId == transaction.CopyId && transaction.Active)
+                        if(copy.CopyID == transaction.CopyId && transaction.Active)
                         {
                             copies.Add(copy);
                         }
@@ -125,11 +125,11 @@ namespace DataAccessFakes
             List<CopyVM> copies = new List<CopyVM>();
             foreach(var transaction in _transactions)
             {
-                if (transaction.TransactionId == transactionId)
+                if (transaction.TransactionID == transactionId)
                 {
                     foreach (var copy in _copies)
                     {
-                        if(copy.CopyId == transaction.CopyId)
+                        if(copy.CopyID == transaction.CopyId)
                         {
                             copies.Add(copy);
                         }

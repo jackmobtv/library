@@ -38,7 +38,7 @@ namespace LogicLayer
             try
             {
                 int id = _transactionAccessor.insertTransaction(transaction.UserId, transaction.TransactionType);
-                transaction.TransactionId = id;
+                transaction.TransactionID = id;
                 _transactionAccessor.checkinBook(transaction);
             }
             catch (Exception ex)
@@ -55,7 +55,7 @@ namespace LogicLayer
                 foreach (var transaction in transactions)
                 {
                     Transaction temp = transaction;
-                    temp.TransactionId = id;
+                    temp.TransactionID = id;
                     _transactionAccessor.checkoutBook(temp);
                 }
             }

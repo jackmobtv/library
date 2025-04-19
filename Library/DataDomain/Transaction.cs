@@ -8,7 +8,7 @@ namespace DataDomain
 {
     public class Transaction
     {
-        public int TransactionId { get; set; }
+        public int TransactionID { get; set; }
         public int UserId { get; set; }
         public string TransactionType { get; set; }
         public int CopyId { get; set; }

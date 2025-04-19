@@ -8,7 +8,7 @@ namespace DataDomain
 {
     public class Publisher
     {
-        public int PublisherId { get; set; }
+        public int PublisherID { get; set; }
         public string Name { get; set; }
     }
 }

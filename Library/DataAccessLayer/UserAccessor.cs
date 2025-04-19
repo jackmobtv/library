@@ -139,7 +139,7 @@ namespace DataAccessLayer
                 {
                     user = new UserVM
                     {
-                        UserId = reader.GetInt32(0),
+                        UserID = reader.GetInt32(0),
                         FirstName = reader.GetString(1),
                         LastName = reader.GetString(2),
                         Email = email,
@@ -186,7 +186,7 @@ namespace DataAccessLayer
                 {
                     user = new UserVM
                     {
-                        UserId = reader.GetInt32(0),
+                        UserID = reader.GetInt32(0),
                         FirstName = reader.GetString(1),
                         LastName = reader.GetString(2),
                         Email = email,
@@ -229,7 +229,7 @@ namespace DataAccessLayer
                 {
                     users.Add(new UserVM
                     {
-                        UserId = reader.GetInt32(0),
+                        UserID = reader.GetInt32(0),
                         FirstName = reader.GetString(1),
                         LastName = reader.GetString(2),
                         Email = reader.GetString(3),

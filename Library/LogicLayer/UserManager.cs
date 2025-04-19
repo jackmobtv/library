@@ -97,7 +97,7 @@ namespace LogicLayer
                 if (authenticateUser(email, password))
                 {
                     user = _userAccessor.selectUserByEmail(email);
-                    user.Roles = _userAccessor.selectRolesByUserId(user.UserId);
+                    user.Roles = _userAccessor.selectRolesByUserId(user.UserID);
                 }
             }
             catch (ArgumentException ex)

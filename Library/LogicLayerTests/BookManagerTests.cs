@@ -78,7 +78,7 @@ namespace LogicLayerTests
         {
             Book book = new Book()
             {
-                BookId = 100002,
+                BookID = 100002,
                 Name = "TestName2",
                 Description = "TestDescription2",
                 Genre = "TestGenre2",
@@ -88,7 +88,7 @@ namespace LogicLayerTests
 
             Book oldBook = new Book()
             {
-                BookId = 100002,
+                BookID = 100002,
                 Name = "Die Hard: The Movie The Novel The Movie The Novel",
                 Description = "Dying Hard or Hardly Dying",
                 Genre = "Non-Fiction",
@@ -97,7 +97,7 @@ namespace LogicLayerTests
             };
 
             _bookManager.editBook(book, oldBook, 1, 1, 1, 1);
-            Book expectedBook = _bookManager.getBookById(book.BookId);
+            Book expectedBook = _bookManager.getBookById(book.BookID);
 
             Assert.AreEqual(book.Name, expectedBook.Name);
         }
@@ -107,7 +107,7 @@ namespace LogicLayerTests
         {
             Copy copy = new Copy()
             {
-                CopyId = 100003,
+                CopyID = 100003,
                 BookId = 100000,
                 Condition = "Good",
                 Active = true
@@ -126,7 +126,7 @@ namespace LogicLayerTests
         {
             Copy copy = new Copy()
             {
-                CopyId = 100000,
+                CopyID = 100000,
                 BookId = 100000,
                 Condition = "Test",
                 Active = true
@@ -134,14 +134,14 @@ namespace LogicLayerTests
 
             Copy oldCopy = new Copy()
             {
-                CopyId = 100000,
+                CopyID = 100000,
                 BookId = 100000,
                 Condition = "Good",
                 Active = true
             };
 
             _bookManager.editCopy(copy, oldCopy);
-            Copy expectedCopy = _bookManager.getCopyById(copy.CopyId);
+            Copy expectedCopy = _bookManager.getCopyById(copy.CopyID);
 
             Assert.AreEqual(copy.Condition, expectedCopy.Condition);
         }

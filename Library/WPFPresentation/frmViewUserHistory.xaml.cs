@@ -32,8 +32,8 @@ namespace WPFPresentation
                 _user = user;
                 _transactionManager = new TransactionManager();
                 _userManager = new UserManager();
-                grdCheckoutList.ItemsSource = _transactionManager.getCheckedOutCopies(_user.UserId);
-                grdTransactionList.ItemsSource = _transactionManager.getTransactionsByUserId(_user.UserId);
+                grdCheckoutList.ItemsSource = _transactionManager.getCheckedOutCopies(_user.UserID);
+                grdTransactionList.ItemsSource = _transactionManager.getTransactionsByUserId(_user.UserID);
                 if (!_user.Active)
                 {
                     btnDeactivate.Content = "Activate";
@@ -50,7 +50,7 @@ namespace WPFPresentation
             var transaction = grdTransactionList.SelectedItem as Transaction;
             if (transaction != null)
             {
-                new frmViewTransaction(transaction.TransactionId).ShowDialog();
+                new frmViewTransaction(transaction.TransactionID).ShowDialog();
             }
         }
 
@@ -63,11 +63,11 @@ namespace WPFPresentation
                 {
                     if ((string)btnDeactivate.Content == "Deactivate")
                     {
-                        _userManager.deactivateUser(_user.UserId);
+                        _userManager.deactivateUser(_user.UserID);
                     }
                     else
                     {
-                        _userManager.activateUser(_user.UserId);
+                        _userManager.activateUser(_user.UserID);
                     }
                     this.Close();
                 }

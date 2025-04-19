@@ -18,7 +18,7 @@ namespace DataAccessFakes
 
             _users.Add(new UserVM()
             {
-                UserId = 100000,
+                UserID = 100000,
                 FirstName = "A",
                 LastName = "AA",
                 Email = "a@test.com",
@@ -27,7 +27,7 @@ namespace DataAccessFakes
             });
             _users.Add(new UserVM()
             {
-                UserId = 100001,
+                UserID = 100001,
                 FirstName = "B",
                 LastName = "BB",
                 Email = "b@test.com",
@@ -36,7 +36,7 @@ namespace DataAccessFakes
             });
             _users.Add(new UserVM()
             {
-                UserId = 100002,
+                UserID = 100002,
                 FirstName = "C",
                 LastName = "CC",
                 Email = "c@test.com",
@@ -45,7 +45,7 @@ namespace DataAccessFakes
             });
             _users.Add(new UserVM()
             {
-                UserId = 100003,
+                UserID = 100003,
                 FirstName = "D",
                 LastName = "DD",
                 Email = "d@test.com",
@@ -54,7 +54,7 @@ namespace DataAccessFakes
             });
             _users.Add(new UserVM()
             {
-                UserId = 100004,
+                UserID = 100004,
                 FirstName = "E",
                 LastName = "EE",
                 Email = "e@test.com",
@@ -74,7 +74,7 @@ namespace DataAccessFakes
         {
             _users.Add(new UserVM()
             {
-                UserId = 100005,
+                UserID = 100005,
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
@@ -105,7 +105,7 @@ namespace DataAccessFakes
 
             foreach (var user in _users)
             {
-                if(user.UserId == userId) 
+                if(user.UserID == userId) 
                 { 
                     roles = user.Roles; 
                     break; 
@@ -157,7 +157,7 @@ namespace DataAccessFakes
         {
             foreach (var user in _users)
             {
-                if(user.UserId == userId)
+                if(user.UserID == userId)
                 {
                     user.Active = false;
                     break;
@@ -169,7 +169,7 @@ namespace DataAccessFakes
         {
             foreach (var user in _users)
             {
-                if (user.UserId == userId)
+                if (user.UserID == userId)
                 {
                     user.Active = true;
                     break;

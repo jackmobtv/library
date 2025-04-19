@@ -42,7 +42,7 @@ namespace WPFPresentation
             txtDescription.Text = _book.Description;
             try
             {
-                _copies = _bookManager.getCopiesByBookId(book.BookId);
+                _copies = _bookManager.getCopiesByBookId(book.BookID);
                 grdCopyList.ItemsSource = _copies;
             }
             catch (Exception ex)
@@ -55,8 +55,8 @@ namespace WPFPresentation
         {
             if(_book != null)
             {
-                new frmCreateEditDeactivateCopy(_book.BookId).ShowDialog();
-                _copies = _bookManager.getCopiesByBookId(_book.BookId);
+                new frmCreateEditDeactivateCopy(_book.BookID).ShowDialog();
+                _copies = _bookManager.getCopiesByBookId(_book.BookID);
                 grdCopyList.ItemsSource = _copies;
             }
             else
@@ -72,8 +72,8 @@ namespace WPFPresentation
                 var copy = grdCopyList.SelectedItem as Copy;
                 if (copy != null)
                 {
-                    new frmCreateEditDeactivateCopy(copy, _book.BookId).ShowDialog();
-                    _copies = _bookManager.getCopiesByBookId(_book.BookId);
+                    new frmCreateEditDeactivateCopy(copy, _book.BookID).ShowDialog();
+                    _copies = _bookManager.getCopiesByBookId(_book.BookID);
                     grdCopyList.ItemsSource = _copies;
                 }
             }
@@ -118,7 +118,7 @@ namespace WPFPresentation
                 {
                     if (genre.Name == txtGenre.Text)
                     {
-                        GenreId = genre.GenreId;
+                        GenreId = genre.GenreID;
                         break;
                     }
                 }
@@ -146,7 +146,7 @@ namespace WPFPresentation
                     {
                         if (genre.Name == txtGenre.Text)
                         {
-                            GenreId = genre.GenreId;
+                            GenreId = genre.GenreID;
                             break;
                         }
                     }
@@ -156,7 +156,7 @@ namespace WPFPresentation
                 {
                     if (publisher.Name == txtPublisher.Text)
                     {
-                        PublisherId = publisher.PublisherId;
+                        PublisherId = publisher.PublisherID;
                         break;
                     }
                 }
@@ -170,7 +170,7 @@ namespace WPFPresentation
                     {
                         if (publisher.Name == txtPublisher.Text)
                         {
-                            PublisherId = publisher.PublisherId;
+                            PublisherId = publisher.PublisherID;
                             break;
                         }
                     }
@@ -178,7 +178,7 @@ namespace WPFPresentation
 
                 if (_book != null)
                 {
-                    Book oldBook = _bookManager.getBookById(_book.BookId);
+                    Book oldBook = _bookManager.getBookById(_book.BookID);
                     int oldGenre = 0;
                     int oldPublisher = 0;
 
@@ -186,7 +186,7 @@ namespace WPFPresentation
                     {
                         if (genre.Name == _book.Genre)
                         {
-                            oldGenre = genre.GenreId;
+                            oldGenre = genre.GenreID;
                             break;
                         }
                     }
@@ -194,7 +194,7 @@ namespace WPFPresentation
                     {
                         if (publisher.Name == _book.Publisher)
                         {
-                            oldPublisher = publisher.PublisherId;
+                            oldPublisher = publisher.PublisherID;
                             break;
                         }
                     }
@@ -214,13 +214,13 @@ namespace WPFPresentation
                     {
                         if (!yes && author.Name == _book.Author)
                         {
-                            _bookManager.editAuthor(author.AuthorId, _book.BookId);
+                            _bookManager.editAuthor(author.AuthorID, _book.BookID);
                             yes = true;
                         }
                     }
                     if (!yes)
                     {
-                        _bookManager.addAuthor(_book.Author, _book.BookId);
+                        _bookManager.addAuthor(_book.Author, _book.BookID);
                     }
 
                     _bookManager.editBook(_book, oldBook, GenreId, PublisherId, oldGenre, oldPublisher);
@@ -246,14 +246,14 @@ namespace WPFPresentation
                             {
                                 if (author.Name == _book.Author)
                                 {
-                                    _bookManager.addBookAuthor(author.AuthorId, _book.BookId);
+                                    _bookManager.addBookAuthor(author.AuthorID, _book.BookID);
                                     yes = true;
                                 }
                             }
                             if (!yes)
                             {
-                                _bookManager.addBookAuthor(10001, book.BookId);
-                                _bookManager.addAuthor(_book.Author, book.BookId);
+                                _bookManager.addBookAuthor(10001, book.BookID);
+                                _bookManager.addAuthor(_book.Author, book.BookID);
                             }
                         }
                     }

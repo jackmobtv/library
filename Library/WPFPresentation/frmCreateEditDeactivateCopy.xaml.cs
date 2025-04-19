@@ -61,7 +61,7 @@ namespace WPFPresentation
                     else
                     {
                         _copy.Condition = txtCondition.Text;
-                        Copy oldCopy = _bookManager.getCopyById(_copy.CopyId);
+                        Copy oldCopy = _bookManager.getCopyById(_copy.CopyID);
                         _bookManager.editCopy(_copy, oldCopy);
                         this.Close();
                     }
@@ -86,11 +86,11 @@ namespace WPFPresentation
                 {
                     if (_copy.Active)
                     {
-                        _bookManager.deactivateCopy(_copy.CopyId);
+                        _bookManager.deactivateCopy(_copy.CopyID);
                     }
                     else
                     {
-                        _bookManager.activateCopy(_copy.CopyId);
+                        _bookManager.activateCopy(_copy.CopyID);
                     }
                     this.Close();
                 }

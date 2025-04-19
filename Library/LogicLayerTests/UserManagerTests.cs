@@ -95,7 +95,7 @@ namespace LogicLayerTests
             const string password = "newuser";
             int expectedValue = 100000;
 
-            int actualValue = _userManager.loginUser(email, password).UserId;
+            int actualValue = _userManager.loginUser(email, password).UserID;
 
             Assert.AreEqual(expectedValue, actualValue);
         }

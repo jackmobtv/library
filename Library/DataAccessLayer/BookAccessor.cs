@@ -78,7 +78,7 @@ namespace DataAccessLayer
                 {
                     books.Add(new Book()
                     {
-                        BookId = reader.GetInt32(0),
+                        BookID = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
                         GenreId = reader.GetInt32(3),
@@ -278,7 +278,7 @@ namespace DataAccessLayer
                 {
                     authors.Add(new Author()
                     {
-                        AuthorId = reader.GetInt32(0),
+                        AuthorID = reader.GetInt32(0),
                         BookId = reader.GetInt32(1),
                         Name = reader.GetString(2)
                     });
@@ -312,7 +312,7 @@ namespace DataAccessLayer
                 {
                     books.Add(new Book()
                     {
-                        BookId = reader.GetInt32(0),
+                        BookID = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
                         Genre = reader.GetString(3),
@@ -349,7 +349,7 @@ namespace DataAccessLayer
                 {
                     genres.Add(new Genre()
                     {
-                        GenreId = reader.GetInt32(0),
+                        GenreID = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
                     });
@@ -384,7 +384,7 @@ namespace DataAccessLayer
                 {
                     publishers.Add(new Publisher()
                     {
-                        PublisherId = reader.GetInt32(0),
+                        PublisherID = reader.GetInt32(0),
                         Name = reader.GetString(1),
                     });
                 }
@@ -422,7 +422,7 @@ namespace DataAccessLayer
                 {
                     book = new Book()
                     {
-                        BookId = reader.GetInt32(0),
+                        BookID = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
                         Genre = reader.GetString(3),
@@ -465,7 +465,7 @@ namespace DataAccessLayer
                 {
                     copies.Add(new Copy()
                     {
-                        CopyId = reader.GetInt32(0),
+                        CopyID = reader.GetInt32(0),
                         BookId = reader.GetInt32(1),
                         Condition = reader.GetString(2),
                         Active = reader.GetBoolean(3)
@@ -503,7 +503,7 @@ namespace DataAccessLayer
                 {
                     copy = new Copy()
                     {
-                        CopyId = reader.GetInt32(0),
+                        CopyID = reader.GetInt32(0),
                         BookId = reader.GetInt32(1),
                         Condition = reader.GetString(2),
                         Active = reader.GetBoolean(3)
@@ -569,7 +569,7 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@GenreID_Old", SqlDbType.Int);
             cmd.Parameters.Add("@PublisherID_Old", SqlDbType.Int);
 
-            cmd.Parameters[0].Value = book.BookId;
+            cmd.Parameters[0].Value = book.BookID;
             cmd.Parameters[1].Value = book.Name;
             cmd.Parameters[2].Value = book.Description;
             cmd.Parameters[3].Value = genreId;
@@ -604,7 +604,7 @@ namespace DataAccessLayer
             cmd.Parameters.Add("@Condition", SqlDbType.NVarChar);
             cmd.Parameters.Add("@Condition_Old", SqlDbType.NVarChar);
 
-            cmd.Parameters[0].Value = copy.CopyId;
+            cmd.Parameters[0].Value = copy.CopyID;
             cmd.Parameters[1].Value = copy.Condition;
             cmd.Parameters[2].Value = oldCopy.Condition;
 
