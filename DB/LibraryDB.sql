@@ -26,7 +26,7 @@ GO
 CREATE TABLE [dbo].[Genre] (
       [GenreID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [Name] [NVARCHAR](100) NOT NULL UNIQUE
-    , [Description] [NVARCHAR](255) NOT NULL UNIQUE
+    , [Description] [NVARCHAR](255) NOT NULL
 )
 GO
 
@@ -36,8 +36,8 @@ CREATE TABLE [dbo].[Book] (
       [BookID] [INT] IDENTITY (10000, 1) NOT NULL PRIMARY KEY
     , [GenreID] [INT] NOT NULL
     , [PublisherID] [INT] NOT NULL
-    , [Name] [NVARCHAR](255)
-    , [Description] [NVARCHAR](255)
+    , [Name] [NVARCHAR](255) NOT NULL
+    , [Description] [NVARCHAR](255) NOT NULL
 
     , CONSTRAINT [fk_Book_GenreID] FOREIGN KEY ([GenreID]) REFERENCES [Genre] ([GenreID])
     , CONSTRAINT [fk_Book_PublisherID] FOREIGN KEY ([PublisherID]) REFERENCES [Publisher] ([PublisherID])

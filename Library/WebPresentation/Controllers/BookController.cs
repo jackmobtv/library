@@ -33,58 +33,166 @@ namespace WebPresentation.Controllers
         // POST: BookController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Book book)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if(ModelState.IsValid)
+                {
+                    int[] data = CreateBookData(book);
+
+                    _bookManager.addBook(book, data[0], data[1]);
+
+                    foreach (var bookRow in _bookManager.getBookTable())
+                    {
+                        if (bookRow.Name == book.Name && bookRow.Description == book.Description)
+                        {
+                            bool yes = false;
+                            foreach (var author in _bookManager.getAllAuthors())
+                            {
+                                if (author.Name == book.Author)
+                                {
+                                    _bookManager.addBookAuthor(author.AuthorID, book.BookID);
+                                    yes = true;
+                                }
+                            }
+                            if (!yes)
+                            {
+                                _bookManager.addBookAuthor(10001, bookRow.BookID);
+                                _bookManager.addAuthor(book.Author, bookRow.BookID);
+                            }
+                        }
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                } 
+                else
+                {
+                    throw new ArgumentException("Invalid Data");
+                }
             }
             catch
             {
-                return View();
+                return View(book);
             }
         }
 
         // GET: BookController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Book book = _bookManager.getBookById(id);
+
+            return View(book);
         }
 
         // POST: BookController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Book book)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if(ModelState.IsValid)
+                {
+                    int[] data = CreateBookData(book);
+
+                    book.BookID = id;
+
+                    Book oldBook = _bookManager.getBookById(id);
+
+                    bool yes = false;
+                    foreach (var author in _bookManager.getAllAuthors())
+                    {
+                        if (!yes && author.Name == book.Author)
+                        {
+                            _bookManager.editAuthor(author.AuthorID, book.BookID);
+                            yes = true;
+                        }
+                    }
+                    if (!yes)
+                    {
+                        _bookManager.addAuthor(book.Author, book.BookID);
+                    }
+
+                    _bookManager.editBook(book, oldBook, data[0], data[1], oldBook.GenreId, oldBook.PublisherId);
+
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid Data");
+                }
             }
             catch
             {
-                return View();
+                return View(book);
             }
         }
 
-        // GET: BookController/Delete/5
-        public ActionResult Delete(int id)
+        public int[] CreateBookData(Book book)
         {
-            return View();
-        }
+            int GenreId = 0;
+            int PublisherId = 0;
+            List<Genre> genres = _bookManager.getAllGenres();
+            List<Publisher> publishers = _bookManager.getAllPublishers();
 
-        // POST: BookController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            foreach (var genre in genres)
             {
-                return RedirectToAction(nameof(Index));
+                if (genre.Name == book.Genre)
+                {
+                    GenreId = genre.GenreID;
+                    break;
+                }
             }
-            catch
+            if (GenreId == 0)
             {
-                return View();
+                Genre newGenre = new Genre()
+                {
+                    Name = book.Genre,
+                    Description = ""
+                };
+
+                _bookManager.addGenre(newGenre);
+
+                genres = _bookManager.getAllGenres();
+
+                foreach (var genre in genres)
+                {
+                    if (genre.Name == book.Genre)
+                    {
+                        GenreId = genre.GenreID;
+                        break;
+                    }
+                }
             }
+
+            foreach (var publisher in publishers)
+            {
+                if (publisher.Name == book.Publisher)
+                {
+                    PublisherId = publisher.PublisherID;
+                    break;
+                }
+            }
+            if (PublisherId == 0)
+            {
+                _bookManager.addPublisher(book.Publisher);
+
+                publishers = _bookManager.getAllPublishers();
+
+                foreach (var publisher in publishers)
+                {
+                    if (publisher.Name == book.Publisher)
+                    {
+                        PublisherId = publisher.PublisherID;
+                        break;
+                    }
+                }
+            }
+
+            int[] data = { GenreId, PublisherId };
+
+            return data;
         }
     }
 }
