@@ -21,6 +21,8 @@ namespace WebPresentation.Controllers
         {
             Book book = _bookManager.getBookById(id);
 
+            ViewBag.Copies = _bookManager.getCopiesByBookId(id);
+
             return View(book);
         }
 
@@ -81,6 +83,8 @@ namespace WebPresentation.Controllers
         public ActionResult Edit(int id)
         {
             Book book = _bookManager.getBookById(id);
+
+            ViewBag.Copies = _bookManager.getCopiesByBookId(id);
 
             return View(book);
         }

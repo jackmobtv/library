@@ -18,5 +18,15 @@ namespace DataDomain
     public class UserVM : User
     {
         public List<string> Roles { get; set; }
+
+        public bool isLibrarian()
+        {
+            return Roles.Contains("Librarian") || Roles.Contains("Admin");
+        }
+
+        public bool isAdmin()
+        {
+            return Roles.Contains("Admin");
+        }
     }
 }

@@ -1,7 +1,10 @@
-﻿@model DataDomain.Book
+﻿@using DataDomain;
+
+@model DataDomain.Book
 
 @{
     ViewData["Title"] = "Details";
+    IEnumerable<Copy> copies = ViewBag.Copies;
 }
 
 <h1>Details</h1>
@@ -45,4 +48,41 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.BookID">Edit</a>
     <a asp-action="Index">Back to List</a>
+</div>
+<div class="my-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Condition
+                </th>
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var copy in copies)
+            {
+                <tr>
+                    <td>
+                        @copy.Condition
+                    </td>
+                    <td>
+                        @if(copy.Active){
+                            <p>In</p>
+                        } else {
+                            <p>Out</p>
+                        }
+                    </td>
+                    <td>
+                        @if(copy.Active){
+                            <a class="btn btn-outline-success">Checkout</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

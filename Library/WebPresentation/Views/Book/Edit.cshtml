@@ -1,7 +1,10 @@
-﻿@model DataDomain.Book
+﻿@using DataDomain;
+
+@model DataDomain.Book
 
 @{
     ViewData["Title"] = "Edit";
+    IEnumerable<Copy> copies = ViewBag.Copies;
 }
 
 <h1>Edit</h1>
@@ -19,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,6 +49,48 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
+</div>
+
+<div class="my-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Condition
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    @*Button To Activate New Copy Modal*@
+                    <button class="btn btn-outline-primary">New</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var copy in copies)
+            {
+                <tr>
+                    <td>
+                        @copy.Condition
+                    </td>
+                    <td>
+                        @if(copy.Active){
+                            <p>In</p>
+                        } else {
+                            <p>Out</p>
+                        }
+                    </td>
+                    <td>
+                        @*Button To Activate Edit Copy Modal*@
+                        <button class="btn btn-outline-primary">Edit</button>
+                        @* @Html.ActionLink("Delete", "Delete", new { id = copy.CopyID }) *@
+                        <a asp-action="Delete" asp-controller="Copy" asp-route-id="@copy.CopyID" class="btn btn-outline-danger">Deactivate</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 @section Scripts {
