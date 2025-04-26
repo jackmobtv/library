@@ -19,18 +19,19 @@ namespace WebPresentation.Controllers
 
         public IActionResult Index()
         {
+            AccessToken accessToken = new AccessToken();
             string email = GetUserEmail();
 
             if(email != null)
             {
-                if (!AccessToken.IsSet)
+                if (!accessToken.IsSet)
                 {
-                    AccessToken.SetToken(email);
+                    accessToken.SetToken(email);
                 }
             } 
             else
             {
-                AccessToken.UnsetToken();
+                accessToken.UnsetToken();
             }
 
             return View();

@@ -4,28 +4,28 @@ using System.Security.Claims;
 
 namespace WebPresentation.Models
 {
-    public static class AccessToken
+    public class AccessToken
     {
-        private static UserVM token;
-        private static UserManager _userManager = new UserManager();
+        private static UserVM _token = new UserVM() { UserID = 0, Email = "", FirstName = "", LastName = "", Active = false };
+        private UserManager _userManager = new UserManager();
 
-        public static void SetToken(string email)
+        public void SetToken(string email)
         {
-            token = _userManager.getUserByEmail(email);
+            _token = _userManager.getUserByEmail(email);
         }
 
-        public static void UnsetToken()
+        public void UnsetToken()
         {
-            token = new UserVM() { UserID = 0, Email = "", FirstName = "", LastName = "", Active = false };
+            _token = new UserVM() { UserID = 0, Email = "", FirstName = "", LastName = "", Active = false };
         }
 
-        public static bool IsSet { get { return token.UserID != 0; } }
-        public static int UserId { get { return token.UserID; } }
-        public static string Email { get { return token.Email; } }
-        public static string FirstName { get { return token.FirstName; } }
-        public static string LastName { get { return token.LastName; } }
-        public static List<string> Roles { get { return token.Roles; } }
-        public static bool IsLibrarian { get { return token.isLibrarian(); } }
-        public static bool IsAdmin { get { return token.isAdmin(); } }
+        public bool IsSet { get { return _token.UserID != 0; } }
+        public int UserId { get { return _token.UserID; } }
+        public string Email { get { return _token.Email; } }
+        public string FirstName { get { return _token.FirstName; } }
+        public string LastName { get { return _token.LastName; } }
+        public List<string> Roles { get { return _token.Roles; } }
+        public bool IsLibrarian { get { return _token.isLibrarian(); } }
+        public bool IsAdmin { get { return _token.isAdmin(); } }
     }
 }
