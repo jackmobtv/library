@@ -18,6 +18,7 @@ namespace LogicLayer
         public void editCopy(Copy copy, Copy oldCopy);
         public void deactivateCopy(int copyId);
         public Copy getCopyById(int copyId);
+        public CopyVM getCopyVMById(int copyId);
         public void activateCopy(int copyId);
         public List<Genre> getAllGenres();
         public void addGenre(Genre genre);

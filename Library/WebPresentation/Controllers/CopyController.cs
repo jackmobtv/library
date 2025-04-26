@@ -2,12 +2,17 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataDomain;
+using WebPresentation.Models;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
+using NuGet.Common;
 
 namespace WebPresentation.Controllers
 {
     public class CopyController : Controller
     {
         BookManager _bookManager = new BookManager();
+        TransactionManager _transactionManager = new TransactionManager();
 
         // POST: CopyController/Create
         [HttpPost]
@@ -81,14 +86,74 @@ namespace WebPresentation.Controllers
             }
         }
 
+        // GET: CopyController/CheckoutList/5
+        [HttpGet]
+        public ActionResult Checkout()
+        {
+            return View(CheckoutList.copies);
+        }
+
         // POST: CopyController/Checkout/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Checkout(int id, IFormCollection collection)
+        [Authorize]
+        public ActionResult Checkout(IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                AccessToken token = new AccessToken();
+                if (token.IsSet)
+                {
+                    List<Transaction> transaction = new List<Transaction>();
+
+                    foreach (var copy in CheckoutList.copies)
+                    {
+                        Transaction copyTransaction = new Transaction()
+                        {
+                            UserId = token.UserId,
+                            TransactionType = "CHECKOUT",
+                            CopyId = copy.CopyID,
+                            TransactionDate = DateTime.Now
+                        };
+                        transaction.Add(copyTransaction);
+                    }
+
+                    _transactionManager.checkoutBook(transaction);
+                    CheckoutList.copies.Clear();
+
+                    return RedirectToAction("Index", "Home");
+                } 
+                else
+                {
+                    throw new ArgumentException("User Does Not Correspond to DB User");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(CheckoutList.copies);
+            }
+        }
+
+        // POST: CopyController/Checkin/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult Checkin(int id, IFormCollection collection)
+        {
+            try
+            {
+                Transaction transaction = new Transaction()
+                {
+                    UserId = new AccessToken().UserId,
+                    TransactionType = "CHECKIN",
+                    CopyId = id,
+                    TransactionDate = DateTime.Now
+                };
+
+                _transactionManager.checkinBook(transaction);
+
+                return RedirectToAction(nameof(CheckedOut));
             }
             catch
             {
@@ -96,19 +161,68 @@ namespace WebPresentation.Controllers
             }
         }
 
-        // POST: CopyController/Checkin/5
+        // POST: CopyController/AddToCheckout/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Checkin(int id, IFormCollection collection)
+        public ActionResult AddToCheckout(int copyId, int bookId)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (CheckoutList.IsInList(copyId))
+                {
+                    throw new ArgumentException("Copy is Already In Checkout List");
+                } 
+                else
+                {
+                    CheckoutList.copies.Add(_bookManager.getCopyVMById(copyId));
+                }
+
+                return RedirectToAction("Details", "Book", new { id = bookId });
             }
             catch
             {
-                return View();
+                return RedirectToAction("Details", "Book", new { id = bookId });
             }
+        }
+
+        // POST: CopyController/RemoveFromCheckout/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveFromCheckout(int id)
+        {
+            try
+            {
+                if (!CheckoutList.IsInList(id))
+                {
+                    throw new ArgumentException("Copy is Not In Checkout List");
+                }
+                else
+                {
+                    CheckoutList.RemoveFromList(id);
+                }
+
+                return RedirectToAction(nameof(Checkout));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Checkout));
+            }
+        }
+        
+        // GET: CopyController/CheckoutList/5
+        [HttpGet]
+        [Authorize]
+        public ActionResult CheckedOut()
+        {
+            List<CopyVM> copies = new List<CopyVM>();
+
+            try
+            {
+                copies = _transactionManager.getCheckedOutCopies(new AccessToken().UserId);
+            }
+            catch {}
+
+            return View(copies);
         }
     }
 }

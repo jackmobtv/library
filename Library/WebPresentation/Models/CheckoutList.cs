@@ -4,7 +4,7 @@ namespace WebPresentation.Models
 {
     public static class CheckoutList
     {
-        public static List<Copy> copies = new List<Copy>();
+        public static List<CopyVM> copies = new List<CopyVM>();
 
         public static bool IsInList(int copyId)
         {

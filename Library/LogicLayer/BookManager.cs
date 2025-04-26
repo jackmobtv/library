@@ -233,5 +233,17 @@ namespace LogicLayer
                 throw ex;
             }
         }
+
+        public CopyVM getCopyVMById(int copyId)
+        {
+            try
+            {
+                return _bookAccessor.selectCopyVMById(copyId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -622,5 +622,48 @@ namespace DataAccessLayer
                 conn.Close();
             }
         }
+
+        public CopyVM selectCopyVMById(int copyId)
+        {
+            CopyVM copy = null;
+
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_select_copy_vm_by_id", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@CopyID", SqlDbType.Int);
+            cmd.Parameters[0].Value = copyId;
+
+            try
+            {
+                conn.Open();
+                var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    copy = new CopyVM()
+                    {
+                        CopyID = reader.GetInt32(0),
+                        BookId = reader.GetInt32(1),
+                        Condition = reader.GetString(2),
+                        Active = reader.GetBoolean(3),
+                        Name = reader.GetString(4)
+                    };
+                }
+                else
+                {
+                    throw new ArgumentException("Copy Not Found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return copy;
+        }
     }
 }

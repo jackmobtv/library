@@ -267,5 +267,17 @@ namespace LogicLayerTests
 
             Assert.AreEqual(expectedValue, actualValue);
         }
+
+        [TestMethod]
+        public void testGetCopyVMById()
+        {
+            const string expectedValue = "Tubas and Company";
+            string actualValue;
+            const int id = 100000;
+
+            actualValue = _bookManager.getCopyVMById(id).Name;
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
     }
 }

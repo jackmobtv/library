@@ -970,3 +970,26 @@ AS
 	
 	END
 GO
+
+PRINT '' PRINT '*** Creating Procedure sp_select_copy_vm_by_id'
+GO
+CREATE PROCEDURE [dbo].[sp_select_copy_vm_by_id]
+(
+    @CopyID INT
+)
+AS
+    BEGIN
+
+        SELECT
+              [CopyID]
+            , [Copy].[BookID]
+            , [Condition]
+            , [Active]
+			, [Name]
+        FROM [dbo].[Copy]
+		JOIN [Book]
+			ON [Copy].[BookID] = [Book].[BookID]
+        WHERE [CopyID] = @CopyID
+
+    END
+GO

@@ -77,8 +77,10 @@
                         }
                     </td>
                     <td>
-                        @if(copy.Active){
-                            <a class="btn btn-outline-success">Checkout</a>
+                        @if(copy.Active && !CheckoutList.IsInList(copy.CopyID)){
+                            <form asp-action="AddToCheckout" asp-controller="Copy" method="post" asp-route-copyId="@copy.CopyID" asp-route-bookId="@copy.BookId">
+                                <button type="submit" class="btn btn-outline-success">Checkout</button>
+                            </form>
                         }
                     </td>
                 </tr>

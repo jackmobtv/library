@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DataAccessInterfaces;
 using DataDomain;
 
@@ -280,6 +281,30 @@ namespace DataAccessFakes
                 }
             }
             throw new ArgumentException("Book Not Found");
+        }
+
+        public CopyVM selectCopyVMById(int copyId)
+        {
+            foreach (var copy in _copies)
+            {
+                if (copy.CopyID == copyId)
+                {
+                    foreach (var book in _books)
+                    {
+                        if(copy.BookId == book.BookID)
+                        {
+                            CopyVM copyVM = new CopyVM();
+                            copyVM.CopyID = copyId;
+                            copyVM.Condition = copy.Condition;
+                            copyVM.Active = copy.Active;
+                            copyVM.BookId = book.BookID;
+                            copyVM.Name = book.Name;
+                            return copyVM;
+                        }
+                    }
+                }
+            }
+            throw new ArgumentException("Copy Not Found");
         }
     }
 }

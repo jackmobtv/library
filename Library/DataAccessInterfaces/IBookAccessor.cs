@@ -18,6 +18,7 @@ namespace DataAccessInterfaces
         public void updateCopy(Copy copy, Copy oldCopy);
         public void deactivateCopy(int copyId);
         public Copy selectCopyById(int copyId);
+        public CopyVM selectCopyVMById(int copyId);
         public void activateCopy(int copyId);
         public List<Genre> selectAllGenres();
         public void insertGenre(Genre genre);
