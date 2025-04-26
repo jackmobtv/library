@@ -1,6 +1,7 @@
 ﻿using LogicLayer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using DataDomain;
 
 namespace WebPresentation.Controllers
 {
@@ -11,15 +12,24 @@ namespace WebPresentation.Controllers
         // POST: CopyController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(int id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                string condition = collection["condition"];
+
+                if (condition is null || condition == "")
+                {
+                    throw new ArgumentException("Condition Cannot Be Empty");
+                }
+
+                _bookManager.addCopy(new Copy { BookId = id, Condition = condition });
+
+                return RedirectToAction("Edit", "Book", new { id = id });
             }
             catch
             {
-                return View();
+                return RedirectToAction("Edit", "Book", new { id = id });
             }
         }
 
@@ -30,28 +40,44 @@ namespace WebPresentation.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                string condition = collection["condition"];
+                int copyId = int.Parse(collection["copyId"]);
+
+                if (condition is null || condition == "")
+                {
+                    throw new ArgumentException("Condition Cannot Be Empty");
+                }
+
+                _bookManager.editCopy(new Copy { CopyID = copyId, Condition = condition }, _bookManager.getCopyById(copyId));
+
+                return RedirectToAction("Edit", "Book", new { id = id });
             }
             catch
             {
-                return View();
+                return RedirectToAction("Edit", "Book", new { id = id });
             }
         }
 
         // POST: CopyController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int copyId, int bookId, IFormCollection collection)
         {
             try
             {
-                _bookManager.deactivateCopy(id);
+                if (_bookManager.getCopyById(copyId).Active)
+                {
+                    _bookManager.deactivateCopy(copyId);
+                } else
+                {
+                    _bookManager.activateCopy(copyId);
+                }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", "Book", new { id = bookId });
             }
             catch
             {
-                return View();
+                return RedirectToAction("Edit", "Book", new { id = bookId });
             }
         }
 
