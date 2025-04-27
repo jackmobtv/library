@@ -6,17 +6,16 @@ namespace WebPresentation.Models
 {
     public class AccessToken
     {
-        private static UserVM _token = new UserVM() { UserID = 0, Email = "", FirstName = "", LastName = "", Active = false };
+        private UserVM _token = new UserVM() { UserID = 0, Email = "", FirstName = "", LastName = "", Active = false };
         private UserManager _userManager = new UserManager();
 
-        public void SetToken(string email)
+        public AccessToken(string email)
         {
-            _token = _userManager.getUserByEmail(email);
-        }
-
-        public void UnsetToken()
-        {
-            _token = new UserVM() { UserID = 0, Email = "", FirstName = "", LastName = "", Active = false };
+            try
+            {
+                _token = _userManager.getUserByEmail(email);
+            }
+            catch {}
         }
 
         public bool IsSet { get { return _token.UserID != 0; } }

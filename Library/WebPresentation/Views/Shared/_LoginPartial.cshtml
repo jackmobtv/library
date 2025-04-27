@@ -4,7 +4,7 @@
 @inject UserManager<IdentityUser> UserManager
 
 @{
-    string Name = new AccessToken().FirstName;
+    string Name = new AccessToken(User.Identity.Name).FirstName;
 }
 
 <ul class="navbar-nav">

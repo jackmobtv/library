@@ -28,7 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Copy" asp-action="Checkout">Checkout List</a>
                         </li>
-                        @if(new AccessToken().IsSet){
+                        @if(new AccessToken(User.Identity.Name).IsSet){
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Copy" asp-action="CheckedOut">Checked Out</a>
                             </li>

@@ -101,7 +101,7 @@ namespace WebPresentation.Controllers
         {
             try
             {
-                AccessToken token = new AccessToken();
+                AccessToken token = new AccessToken(User.Identity.Name);
                 if (token.IsSet)
                 {
                     List<Transaction> transaction = new List<Transaction>();
@@ -145,7 +145,7 @@ namespace WebPresentation.Controllers
             {
                 Transaction transaction = new Transaction()
                 {
-                    UserId = new AccessToken().UserId,
+                    UserId = new AccessToken(User.Identity.Name).UserId,
                     TransactionType = "CHECKIN",
                     CopyId = id,
                     TransactionDate = DateTime.Now
@@ -218,7 +218,7 @@ namespace WebPresentation.Controllers
 
             try
             {
-                copies = _transactionManager.getCheckedOutCopies(new AccessToken().UserId);
+                copies = _transactionManager.getCheckedOutCopies(new AccessToken(User.Identity.Name).UserId);
             }
             catch {}
 

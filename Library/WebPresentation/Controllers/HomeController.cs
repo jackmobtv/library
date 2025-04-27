@@ -19,21 +19,6 @@ namespace WebPresentation.Controllers
 
         public IActionResult Index()
         {
-            AccessToken accessToken = new AccessToken();
-            string email = GetUserEmail();
-
-            if(email != null)
-            {
-                if (!accessToken.IsSet)
-                {
-                    accessToken.SetToken(email);
-                }
-            } 
-            else
-            {
-                accessToken.UnsetToken();
-            }
-
             return View();
         }
 

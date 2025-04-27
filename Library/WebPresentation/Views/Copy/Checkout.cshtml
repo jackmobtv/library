@@ -37,7 +37,7 @@
     </tbody>
 </table>
 
-@if(new AccessToken().IsSet && CheckoutList.copies.Count != 0){
+@if(new AccessToken(User.Identity.Name).IsSet && CheckoutList.copies.Count != 0){
     <form asp-action="Checkout" method="post">
         <button class="btn btn-outline-primary" type="submit">Checkout</button>
     </form>
