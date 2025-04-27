@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    AccessToken token = new AccessToken(User.Identity.Name);
+}
+
+<!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="utf-8" />
@@ -28,9 +32,15 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Copy" asp-action="Checkout">Checkout List</a>
                         </li>
-                        @if(new AccessToken(User.Identity.Name).IsSet){
+                        @if(token.IsSet){
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Copy" asp-action="CheckedOut">Checked Out</a>
+                            </li>
+                        }
+                        @if (token.IsSet && token.IsLibrarian)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="Index">Member List</a>
                             </li>
                         }
                     </ul>

@@ -1,0 +1,107 @@
+﻿@model DataDomain.UserVM
+@using DataDomain
+
+@{
+    ViewData["Title"] = "Details";
+    IEnumerable<Transaction> transactions = ViewBag.Transactions;
+    IEnumerable<CopyVM> copies = ViewBag.Copies;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>UserVM</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Condition
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in copies)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="Book" asp-route-id="@item.BookId">@item.Name</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Condition)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-2"></div>
+
+    <div class="col-md-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in transactions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TransactionType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TransactionDate)
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-primary" asp-action="Transaction" asp-route-id="@item.TransactionID" asp-route-email="@Model.Email">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

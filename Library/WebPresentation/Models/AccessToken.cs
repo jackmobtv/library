@@ -1,12 +1,13 @@
 ﻿using DataDomain;
 using LogicLayer;
 using System.Security.Claims;
+using System.Xml;
 
 namespace WebPresentation.Models
 {
     public class AccessToken
     {
-        private UserVM _token = new UserVM() { UserID = 0, Email = "", FirstName = "", LastName = "", Active = false };
+        private UserVM _token = new UserVM() { UserID = 0, Email = "", FirstName = "", LastName = "", Active = false, Roles = new List<string>() };
         private UserManager _userManager = new UserManager();
 
         public AccessToken(string email)
@@ -14,6 +15,7 @@ namespace WebPresentation.Models
             try
             {
                 _token = _userManager.getUserByEmail(email);
+                _token.Roles = IsSet ? _userManager.getRolesByUserId(_token.UserID) : new List<string>();
             }
             catch {}
         }

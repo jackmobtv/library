@@ -21,11 +21,21 @@ namespace DataDomain
 
         public bool isLibrarian()
         {
+            if(Roles is null)
+            {
+                return false;
+            }
+
             return Roles.Contains("Librarian") || Roles.Contains("Admin");
         }
 
         public bool isAdmin()
         {
+            if (Roles is null)
+            {
+                return false;
+            }
+
             return Roles.Contains("Admin");
         }
     }

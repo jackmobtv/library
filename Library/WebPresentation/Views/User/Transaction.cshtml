@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DataDomain.CopyVM>
+
+@{
+    ViewData["Title"] = "Transaction";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Transaction</h1>
+    <a asp-action="Details" asp-route-email="@ViewBag.Email" class="btn btn-outline-primary float-right">Back to User</a>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Condition)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Condition)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
