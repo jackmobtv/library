@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataDomain;
 using WebPresentation.Models;
+using System;
 
 namespace WebPresentation.Controllers
 {
@@ -44,6 +45,15 @@ namespace WebPresentation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(IFormCollection collection)
         {
+            try
+            {
+                _userManager.editName(collection["firstname"], collection["lastname"], User.Identity.Name);
+            }
+            catch { }
+
+            ViewBag.User = _userManager.getUserByEmail(User.Identity.Name);
+            ViewBag.Active = "active";
+
             return View();
         }
 
