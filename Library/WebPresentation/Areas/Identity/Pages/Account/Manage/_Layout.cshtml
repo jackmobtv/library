@@ -1,12 +1,14 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
-    {
-        Layout = parentLayout.ToString();
-    }
-    else
-    {
-        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
-    }
+    // if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
+    // {
+    //     Layout = parentLayout.ToString();
+    // }
+    // else
+    // {
+    //     Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    // }
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Manage your account</h1>
@@ -16,7 +18,7 @@
     <hr />
     <div class="row">
         <div class="col-md-3">
-            <partial name="_ManageNav" />
+            <partial name="~/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml" />
         </div>
         <div class="col-md-9">
             @RenderBody()

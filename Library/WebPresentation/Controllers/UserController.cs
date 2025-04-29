@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DataDomain;
+using WebPresentation.Models;
 
 namespace WebPresentation.Controllers
 {
@@ -27,6 +28,23 @@ namespace WebPresentation.Controllers
             ViewBag.Copies = _transactionManager.getCheckedOutCopies(user.UserID);
 
             return View(user);
+        }
+
+        // GET: UserController/Edit
+        public ActionResult Edit() 
+        {
+            ViewBag.User = _userManager.getUserByEmail(User.Identity.Name);
+            ViewBag.Active = "active";
+
+            return View();
+        }
+
+        // POST: UserController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(IFormCollection collection)
+        {
+            return View();
         }
 
         // POST: UserController/Delete/5
