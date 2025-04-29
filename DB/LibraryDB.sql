@@ -993,3 +993,57 @@ AS
 
     END
 GO
+
+PRINT '' PRINT '*** Creating Procedure sp_edit_email'
+GO
+CREATE PROCEDURE [dbo].[sp_edit_email]
+(
+	  @Email NVARCHAR(255)
+	, @Old_Email NVARCHAR(255)
+)
+AS
+	BEGIN
+	
+		UPDATE [dbo].[User]
+		SET [Email] = @Email
+		WHERE [Email] = @Old_Email
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_edit_password'
+GO
+CREATE PROCEDURE [dbo].[sp_edit_password]
+(
+	  @PasswordHash CHAR(64)
+	, @Email NVARCHAR(255)
+)
+AS
+	BEGIN
+	
+		UPDATE [dbo].[User]
+		SET [PasswordHash] = @PasswordHash
+		WHERE [Email] = @Email
+	
+	END
+GO
+
+PRINT '' PRINT '*** Creating Procedure sp_edit_name'
+GO
+CREATE PROCEDURE [dbo].[sp_edit_name]
+(
+	  @FirstName NVARCHAR(255)
+	, @LastName NVARCHAR(255)
+	, @Email NVARCHAR(255)
+)
+AS
+	BEGIN
+	
+		UPDATE [dbo].[User]
+		SET 
+			  [FirstName] = @FirstName
+			, [LastName] = @LastName
+		WHERE [Email] = @Email
+	
+	END
+GO

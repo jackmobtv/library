@@ -165,5 +165,40 @@ namespace LogicLayerTests
             _userManager.deactivateUser(id);
             _userManager.activateUser(id);
         }
+
+        [TestMethod]
+        public void testEditEmail()
+        {
+            const string email = "neweruser@email.com";
+            const string old_email = "b@test.com";
+
+            _userManager.editEmail(email, old_email);
+
+            Assert.AreEqual(email, _userManager.getUserByEmail(email).Email);
+        }
+
+        [TestMethod]
+        public void testEditPassword()
+        {
+            const string password = "pass1";
+            const string email = "b@test.com";
+
+            _userManager.editPassword(password, email);
+            Assert.IsTrue(_userManager.authenticateUser(email, password));
+        }
+
+        [TestMethod]
+        public void testEditName()
+        {
+            const string firstname = "name1";
+            const string lastname = "name2";
+            const string email = "b@test.com";
+
+            _userManager.editName(firstname, lastname, email);
+            UserVM user = _userManager.getUserByEmail(email);
+
+            Assert.AreEqual(user.FirstName, firstname);
+            Assert.AreEqual(user.LastName, lastname);
+        }
     }
 }

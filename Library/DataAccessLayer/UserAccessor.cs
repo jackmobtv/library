@@ -298,5 +298,88 @@ namespace DataAccessLayer
                 conn.Close();
             }
         }
+
+        public void updateEmail(string email, string old_email)
+        {
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_edit_email", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Old_Email", SqlDbType.NVarChar);
+
+            cmd.Parameters[0].Value = email;
+            cmd.Parameters[1].Value = old_email;
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public void updatePassword(string password, string email)
+        {
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_edit_password", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@PasswordHash", SqlDbType.Char);
+            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
+
+            cmd.Parameters[0].Value = password;
+            cmd.Parameters[1].Value = email;
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public void updateName(string firstname, string lastname, string email)
+        {
+            var conn = DBConnection.GetConnection();
+            var cmd = new SqlCommand("sp_edit_name", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.Add("@FirstName", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@LastName", SqlDbType.NVarChar);
+            cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
+
+            cmd.Parameters[0].Value = firstname;
+            cmd.Parameters[1].Value = lastname;
+            cmd.Parameters[2].Value = email;
+
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

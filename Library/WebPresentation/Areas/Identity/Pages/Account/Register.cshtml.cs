@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using LogicLayer;
 
 namespace WebPresentation.Areas.Identity.Pages.Account
 {
@@ -29,6 +30,7 @@ namespace WebPresentation.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly UserManager _manager = new UserManager();
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -120,6 +122,15 @@ namespace WebPresentation.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    try
+                    {
+                        _manager.getUserByEmail(Input.Email);
+                    } 
+                    catch
+                    {
+                        _manager.addUser("", "", Input.Email, Input.Password);
+                    }
+                    
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

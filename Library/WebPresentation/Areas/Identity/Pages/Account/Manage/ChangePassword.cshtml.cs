@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using LogicLayer;
 
 namespace WebPresentation.Areas.Identity.Pages.Account.Manage
 {
@@ -17,6 +19,7 @@ namespace WebPresentation.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
+        private readonly UserManager _manager = new UserManager();
 
         public ChangePasswordModel(
             UserManager<IdentityUser> userManager,
@@ -107,6 +110,7 @@ namespace WebPresentation.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            var email = User.Identity.Name;
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
@@ -116,11 +120,27 @@ namespace WebPresentation.Areas.Identity.Pages.Account.Manage
                 }
                 return Page();
             }
+            else
+            {
+                try
+                {
+                    _manager.editPassword(Input.NewPassword, email);
+                }
+                catch
+                {
+                    await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
+
+                    foreach (var error in changePasswordResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return Page();
+                }
+            }
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
-
             return RedirectToPage();
         }
     }

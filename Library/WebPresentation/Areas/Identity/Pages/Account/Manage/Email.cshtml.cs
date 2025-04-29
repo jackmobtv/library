@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using LogicLayer;
 
 namespace WebPresentation.Areas.Identity.Pages.Account.Manage
 {
@@ -20,6 +21,7 @@ namespace WebPresentation.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly UserManager _manager = new UserManager();
 
         public EmailModel(
             UserManager<IdentityUser> userManager,
@@ -117,18 +119,40 @@ namespace WebPresentation.Areas.Identity.Pages.Account.Manage
             {
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
+                var old_email = User.Identity.Name;
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmailChange",
                     pageHandler: null,
                     values: new { area = "Identity", userId = userId, email = Input.NewEmail, code = code },
                     protocol: Request.Scheme);
-                await _emailSender.SendEmailAsync(
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                //await _emailSender.SendEmailAsync(
+                //    Input.NewEmail,
+                //    "Confirm your email",
+                //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                return Redirect(callbackUrl);
+                var result = await _userManager.ChangeEmailAsync(user, email, code);
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                if (!result.Succeeded)
+                {
+                    StatusMessage = "Error changing email.";
+                    return Page();
+                }
+                //else
+                //{
+                //    try
+                //    {
+                //        _manager.editEmail(email, old_email);
+                //        StatusMessage = "Email Has Been Updated";
+                //    }
+                //    catch
+                //    {
+                //        await _userManager.ChangeEmailAsync(user, old_email, code);
+                //        StatusMessage = "Error changing email.";
+                //    }
+                //}
+
+                StatusMessage = "Email has Sent to Address";
                 return RedirectToPage();
             }
 

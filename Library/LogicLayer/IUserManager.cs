@@ -18,5 +18,8 @@ namespace LogicLayer
         public List<UserVM> getAllUsers();
         public void deactivateUser(int userId);
         public void activateUser(int userId);
+        public void editEmail(string email, string old_email);
+        public void editPassword(string password, string email);
+        public void editName(string firstname, string lastname, string email);
     }
 }

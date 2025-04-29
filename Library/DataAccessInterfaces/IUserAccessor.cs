@@ -17,5 +17,8 @@ namespace DataAccessInterfaces
         public List<UserVM> selectAllUsers();
         public void deactivateUser(int userId);
         public void activateUser(int userId);
+        public void updateEmail(string email, string old_email);
+        public void updatePassword(string password, string email);
+        public void updateName(string firstname, string lastname, string email);
     }
 }

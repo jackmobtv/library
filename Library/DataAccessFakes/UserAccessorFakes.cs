@@ -176,5 +176,48 @@ namespace DataAccessFakes
                 }
             }
         }
+
+        public void updateEmail(string email, string old_email)
+        {
+            for (int i = 0; i < _users.Count; i++)
+            {
+                if (_users[i].Email == old_email)
+                {
+                    _users[i].Email = email;
+                    return;
+                }
+            }
+
+            throw new ArgumentException("User Not Found");
+        }
+
+        public void updatePassword(string password, string email)
+        {
+            for (int i = 0; i < _users.Count; i++)
+            {
+                if (_users[i].Email == email)
+                {
+                    _passwordhashes[i] = password;
+                    return;
+                }
+            }
+
+            throw new ArgumentException("User Not Found");
+        }
+
+        public void updateName(string firstname, string lastname, string email)
+        {
+            for (int i = 0; i < _users.Count; i++)
+            {
+                if (_users[i].Email == email)
+                {
+                    _users[i].FirstName = firstname;
+                    _users[i].LastName = lastname;
+                    return;
+                }
+            }
+
+            throw new ArgumentException("User Not Found");
+        }
     }
 }

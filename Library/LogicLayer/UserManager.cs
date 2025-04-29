@@ -208,5 +208,42 @@ namespace LogicLayer
                 throw ex;
             }
         }
+
+        public void editEmail(string email, string old_email)
+        {
+            try
+            {
+                _userAccessor.updateEmail(email, old_email);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void editPassword(string password, string email)
+        {
+            try
+            {
+                string hash = HashSha256(password);
+                _userAccessor.updatePassword(hash, email);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void editName(string firstname, string lastname, string email)
+        {
+            try
+            {
+                _userAccessor.updateName(firstname, lastname, email);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
