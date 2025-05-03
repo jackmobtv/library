@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataDomain;
 using WebPresentation.Models;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebPresentation.Controllers
 {
@@ -11,27 +12,49 @@ namespace WebPresentation.Controllers
     {
         public UserManager _userManager = new UserManager();
         public TransactionManager _transactionManager = new TransactionManager();
+        private AccessToken _token;
 
         // GET: UserController
+        [Authorize]
         public ActionResult Index()
         {
-            List<UserVM> users = _userManager.getAllUsers();
+            _token = new AccessToken(User.Identity.Name);
 
-            return View(users);
+            if (_token.IsSet && _token.IsLibrarian)
+            {
+                List<UserVM> users = _userManager.getAllUsers();
+
+                return View(users);
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
         }
 
         // GET: UserController/Details/5
+        [Authorize]
         public ActionResult Details(string email)
         {
-            UserVM user = _userManager.getUserByEmail(email);
+            _token = new AccessToken(User.Identity.Name);
 
-            ViewBag.Transactions = _transactionManager.getTransactionsByUserId(user.UserID);
-            ViewBag.Copies = _transactionManager.getCheckedOutCopies(user.UserID);
+            if (_token.IsSet && _token.IsLibrarian)
+            {
+                UserVM user = _userManager.getUserByEmail(email);
 
-            return View(user);
+                ViewBag.Transactions = _transactionManager.getTransactionsByUserId(user.UserID);
+                ViewBag.Copies = _transactionManager.getCheckedOutCopies(user.UserID);
+
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
         }
 
         // GET: UserController/Edit
+        [Authorize]
         public ActionResult Edit() 
         {
             ViewBag.User = _userManager.getUserByEmail(User.Identity.Name);
@@ -41,6 +64,7 @@ namespace WebPresentation.Controllers
         }
 
         // POST: UserController/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(IFormCollection collection)
@@ -82,13 +106,23 @@ namespace WebPresentation.Controllers
         }
 
         // GET: UserController/Transaction/5
+        [Authorize]
         public ActionResult Transaction(int id, string email)
         {
-            List<CopyVM> copies = _transactionManager.getCopiesByTransactionId(id);
+            _token = new AccessToken(User.Identity.Name);
 
-            ViewBag.Email = email;
+            if (_token.IsSet && _token.IsLibrarian)
+            {
+                List<CopyVM> copies = _transactionManager.getCopiesByTransactionId(id);
 
-            return View(copies);
+                ViewBag.Email = email;
+
+                return View(copies);
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
         }
     }
 }

@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Details";
     IEnumerable<Copy> copies = ViewBag.Copies;
+    AccessToken token = new AccessToken(User.Identity.Name);
 }
 
 <h1>Details</h1>
@@ -46,7 +47,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.BookID">Edit</a>
+    @if(token.IsLibrarian){
+        <a asp-action="Edit" asp-route-id="@Model?.BookID">Edit</a>
+    }
     <a asp-action="Index">Back to List</a>
 </div>
 <div class="my-3">
@@ -77,7 +80,7 @@
                         }
                     </td>
                     <td>
-                        @if(copy.Active && !CheckoutList.IsInList(copy.CopyID)){
+                        @if(copy.Active && !CheckoutList.IsInList(copy.CopyID) && token.IsSet){
                             <form asp-action="AddToCheckout" asp-controller="Copy" method="post" asp-route-copyId="@copy.CopyID" asp-route-bookId="@copy.BookId">
                                 <button type="submit" class="btn btn-outline-success">Checkout</button>
                             </form>

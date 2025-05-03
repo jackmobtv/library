@@ -13,8 +13,10 @@ namespace WebPresentation.Controllers
     {
         BookManager _bookManager = new BookManager();
         TransactionManager _transactionManager = new TransactionManager();
+        private AccessToken _token;
 
         // POST: CopyController/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(int id, IFormCollection collection)
@@ -87,6 +89,7 @@ namespace WebPresentation.Controllers
         }
 
         // GET: CopyController/CheckoutList/5
+        [Authorize]
         [HttpGet]
         public ActionResult Checkout()
         {
@@ -101,8 +104,8 @@ namespace WebPresentation.Controllers
         {
             try
             {
-                AccessToken token = new AccessToken(User.Identity.Name);
-                if (token.IsSet)
+                _token = new AccessToken(User.Identity.Name);
+                if (_token.IsSet)
                 {
                     List<Transaction> transaction = new List<Transaction>();
 
@@ -110,7 +113,7 @@ namespace WebPresentation.Controllers
                     {
                         Transaction copyTransaction = new Transaction()
                         {
-                            UserId = token.UserId,
+                            UserId = _token.UserId,
                             TransactionType = "CHECKOUT",
                             CopyId = copy.CopyID,
                             TransactionDate = DateTime.Now

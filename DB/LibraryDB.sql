@@ -359,7 +359,7 @@ AS
         INSERT INTO [dbo].[UserRole]
             (UserID, RoleID)
         VALUES
-            (@@IDENTITY, 10000)
+            (@@IDENTITY, 10002)
 
     COMMIT TRANSACTION
 GO

@@ -2,12 +2,17 @@
 using Microsoft.AspNetCore.Mvc;
 using DataDomain;
 using LogicLayer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity;
+using WebPresentation.Models;
 
 namespace WebPresentation.Controllers
 {
     public class BookController : Controller
     {
         private BookManager _bookManager = new BookManager();
+        private AccessToken _token;
+
         // GET: BookController
         public ActionResult Index()
         {
@@ -27,12 +32,23 @@ namespace WebPresentation.Controllers
         }
 
         // GET: BookController/Create
+        [Authorize]
         public ActionResult Create()
         {
-            return View();
+            _token = new AccessToken(User.Identity.Name);
+
+            if (_token.IsSet && _token.IsLibrarian)
+            {
+                return View();
+            } 
+            else
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
         }
 
         // POST: BookController/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Book book)
@@ -80,16 +96,27 @@ namespace WebPresentation.Controllers
         }
 
         // GET: BookController/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
-            Book book = _bookManager.getBookById(id);
+            _token = new AccessToken(User.Identity.Name);
 
-            ViewBag.Copies = _bookManager.getCopiesByBookId(id);
+            if (_token.IsSet && _token.IsLibrarian)
+            {
+                Book book = _bookManager.getBookById(id);
 
-            return View(book);
+                ViewBag.Copies = _bookManager.getCopiesByBookId(id);
+
+                return View(book);
+            }
+            else
+            {
+                return RedirectToAction("AccessDenied", "Home");
+            }
         }
 
         // POST: BookController/Edit/5
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Book book)

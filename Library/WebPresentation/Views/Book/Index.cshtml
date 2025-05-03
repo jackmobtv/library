@@ -2,13 +2,15 @@
 
 @{
     ViewData["Title"] = "Index";
+    AccessToken token = new AccessToken(User.Identity.Name);
 }
 
 <h1>Index</h1>
 
-<p>
+@if(token.IsLibrarian){
     <a asp-action="Create">Create New</a>
-</p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -31,27 +33,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.BookID">@Html.DisplayFor(modelItem => item.Name)</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.BookID })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.BookID">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    @if (token.IsLibrarian)
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.BookID })
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
