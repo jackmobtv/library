@@ -40,7 +40,7 @@
                     @Html.DisplayFor(modelItem => item.Active)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-email="@item.Email" class="btn btn-outline-primary">View</a>
+                    <a asp-action="Details" asp-route-email="@item.Email" class="btn btn-outline-primary mb-1">View</a>
                     <form asp-action="Delete" asp-route-active="@item.Active" asp-route-id="@item.UserID" method="post">
                         <button type="submit" class="btn btn-outline-danger">
                             @if (item.Active)

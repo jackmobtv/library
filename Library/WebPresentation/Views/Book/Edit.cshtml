@@ -9,7 +9,7 @@
 
 
 <div class="d-flex align-items-center justify-content-between">
-    <h2>Edit</h2>
+    <h3>Edit</h3>
     <a asp-action="Index" class="float-right btn btn-secondary mx-2">Back to List</a>
 </div>
 
@@ -81,7 +81,7 @@
                     </td>
                     <td>
                         @*Button To Activate Edit Copy Modal*@
-                        <button type="button" class="btn btn-outline-warning open-modal edit-modal-button" data-bs-toggle="modal" data-bs-target="#editModal" data-condition="@copy.Condition" data-copyid="@copy.CopyID">
+                        <button type="button" class="btn btn-outline-warning open-modal edit-modal-button mb-1" data-bs-toggle="modal" data-bs-target="#editModal" data-condition="@copy.Condition" data-copyid="@copy.CopyID">
                             Edit
                         </button>
                         @* @Html.ActionLink("Delete", "Delete", new { id = copy.CopyID }) *@
