@@ -7,7 +7,15 @@
     IEnumerable<CopyVM> copies = ViewBag.Copies;
 }
 
-<h1>Details</h1>
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Details</h1>
+    <a asp-action="Index" class="btn btn-primary float-right mx-2">Back to List</a>
+</div>
+
+<div>
+    <h1></h1>
+    
+</div>
 
 <div>
     <hr />
@@ -38,9 +46,7 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
-</div>
+
 <div class="row">
     <div class="col-md-5">
         <table class="table">

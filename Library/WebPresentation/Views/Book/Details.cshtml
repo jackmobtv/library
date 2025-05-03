@@ -8,11 +8,18 @@
     AccessToken token = new AccessToken(User.Identity.Name);
 }
 
-<h1>Details</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Details</h1>
+    <div class ="d-flex justify-content align-items-center float-right">
+        @if (token.IsLibrarian)
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.BookID" class="mx-2 btn btn-warning">Edit</a>
+        }
+        <a asp-action="Index" class="mx-2 btn btn-secondary">Back to List</a>
+    </div>
+</div>
 
 <div>
-    <h4>Book</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -45,12 +52,6 @@
             @Html.DisplayFor(model => model.Publisher)
         </dd>
     </dl>
-</div>
-<div>
-    @if(token.IsLibrarian){
-        <a asp-action="Edit" asp-route-id="@Model?.BookID">Edit</a>
-    }
-    <a asp-action="Index">Back to List</a>
 </div>
 <div class="my-3">
     <table class="table">

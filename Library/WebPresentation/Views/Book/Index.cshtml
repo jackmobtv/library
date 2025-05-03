@@ -5,11 +5,14 @@
     AccessToken token = new AccessToken(User.Identity.Name);
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center">
+    <h1>Books</h1>
 
-@if(token.IsLibrarian){
-    <a asp-action="Create">Create New</a>
-}
+    @if (token.IsLibrarian)
+    {
+        <a asp-action="Create" class="btn btn-warning float-right mx-2">Create New</a>
+    }
+</div>
 
 <table class="table">
     <thead>
@@ -53,7 +56,7 @@
                 <td>
                     @if (token.IsLibrarian)
                     {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.BookID })
+                        <a asp-action="Edit" asp-route-id="@item.BookID" class="btn btn-outline-warning">Edit</a>
                     }
                 </td>
             </tr>
